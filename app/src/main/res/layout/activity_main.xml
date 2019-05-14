@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <com.mltj.xxks.widget.ControlScrollViewPager
+        android:id="@+id/fragment_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tabs_rg" />
+    <View
+        android:layout_above="@id/tabs_rg"
+        android:background="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"></View>
+    <RadioGroup
+        android:id="@+id/tabs_rg"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/withe"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/home_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:checked="true"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_tab_home"
+            android:gravity="center"
+            android:textColor="@drawable/color_radiobutton"
+            android:textSize="10sp"
+            android:text="公告" />
+
+        <RadioButton
+            android:id="@+id/news_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_tab_news"
+            android:gravity="center"
+            android:textColor="@drawable/color_radiobutton"
+            android:textSize="10sp"
+            android:text="新闻" />
+
+        <RadioButton
+            android:id="@+id/study_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_tab_study"
+            android:gravity="center"
+            android:textColor="@drawable/color_radiobutton"
+            android:textSize="10sp"
+            android:text="学习" />
+        <RadioButton
+            android:id="@+id/video_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_tab_video"
+            android:gravity="center"
+            android:textColor="@drawable/color_radiobutton"
+            android:textSize="10sp"
+            android:text="视频" />
+        <RadioButton
+            android:id="@+id/user_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_tab_user"
+            android:gravity="center"
+            android:textColor="@drawable/color_radiobutton"
+            android:textSize="10sp"
+            android:text="我的" />
+    </RadioGroup>
+</RelativeLayout>
