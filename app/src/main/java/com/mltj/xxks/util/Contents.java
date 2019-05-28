@@ -9,6 +9,8 @@ public class Contents {
     public static String BASE_URL_RELEASE = "http://39.105.138.210:8081/";
     public static String BASE_URL_DEBUG = "http://39.105.138.210:8081/";
     public static final String defaultDateFormat="yyyy-MM-dd";
+    public static final String KEY_USER_ACCOUNT="KEY_USER_ACCOUNT";
+    public static final String KEY_USER_PASSWORD="KEY_USER_PASSWORD";
     public static final String KEY_USER_ID="KEY_USER_ID";
     public static final String KEY_USER_NAME="KEY_USER_NAME";
     public static final String KEY_USER_COMPANY="KEY_USER_COMPANY";

@@ -177,7 +177,7 @@ public class LoginActivity extends BasiceActivity implements View.OnClickListene
         StatusBarCompat.setStatusBarColor(this, getColor(R.color.red), true);
     }
 
-    private void login(String name,String paswd) {
+    private void login(final String name, final String paswd) {
         buildProgressDialog(LoginActivity.this);
         ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
         Call<String> call1 = apiService.login("", name,paswd);
@@ -196,6 +196,8 @@ public class LoginActivity extends BasiceActivity implements View.OnClickListene
                         if(user!=null){
                             Intent intent1 = new Intent(LoginActivity.this, WelcomeActivity.class);
                             startActivity(intent1);
+                            UserSPUtil.getInstance(LoginActivity.this).putString(Contents.KEY_USER_ACCOUNT,name);
+                            UserSPUtil.getInstance(LoginActivity.this).putString(Contents.KEY_USER_PASSWORD,paswd);
                             UserSPUtil.getInstance(LoginActivity.this).putInt(Contents.KEY_USER_ID,user.getId());
                             UserSPUtil.getInstance(LoginActivity.this).putString(Contents.KEY_USER_NAME,user.getName());
                             UserSPUtil.getInstance(LoginActivity.this).putString(Contents.KEY_USER_COMPANY,user.getCompanyName());

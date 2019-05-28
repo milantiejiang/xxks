@@ -40,6 +40,16 @@
             android:text="答题卡"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/tj"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/blue"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/tj"
+            android:text="提交"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"

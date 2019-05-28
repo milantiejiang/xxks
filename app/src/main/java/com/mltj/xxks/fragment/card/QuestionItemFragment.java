@@ -22,11 +22,16 @@ import com.mltj.xxks.R;
 import com.mltj.xxks.activity.ExaminationCardActivity;
 import com.mltj.xxks.adapter.OptionsListAdapter;
 import com.mltj.xxks.bean.Answer;
+import com.mltj.xxks.bean.MessageEvent;
 import com.mltj.xxks.bean.QuestionBean;
 import com.mltj.xxks.bean.QuestionOptionBean;
 import com.mltj.xxks.util.Diff_match_patch;
 import com.mltj.xxks.widget.NoScrollListview;
 import com.mltj.xxks.widget.RichEditor;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -38,12 +43,17 @@ public class QuestionItemFragment extends Fragment {
     private StringBuffer sb;
     private NoScrollListview lv;
     private Context context;
+    private boolean isShowAnswer = false;
+    String mText = "";
+    String mQcontent = "";
 
     @SuppressLint("ValidFragment")
-    public QuestionItemFragment(Context context,int index, QuestionBean bean) {
-        this.context=context;
+    public QuestionItemFragment(Context context, int index, QuestionBean bean, boolean isShowAnswer) {
+        this.context = context;
         this.index = index;
         questionBean = bean;
+        this.isShowAnswer = isShowAnswer;
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -54,28 +64,28 @@ public class QuestionItemFragment extends Fragment {
         RelativeLayout rl_description = rootView.findViewById(R.id.rl_description);
         TextView subjectType = rootView.findViewById(R.id.subject_type);
         RichEditor editor = (RichEditor) rootView.findViewById(R.id.editor);
-        LinearLayout lldtjx=rootView.findViewById(R.id.ll_dtjx);
+        LinearLayout lldtjx = rootView.findViewById(R.id.ll_dtjx);
         TextView dtjx = (TextView) rootView.findViewById(R.id.dtjx);
-        final TextView as=rootView.findViewById(R.id.answer);
-        if(questionBean.isShowAnswerAnalysis()){
+        final TextView as = rootView.findViewById(R.id.answer);
+        if (isShowAnswer) {
             lldtjx.setVisibility(View.VISIBLE);
-            as.setText("正确答案："+questionBean.getReferenceAnswer());
             dtjx.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    as.setText("解析：" + questionBean.getTopicAnalysis());
                     as.setVisibility(View.VISIBLE);
                 }
             });
-        }else {
+        } else {
             lldtjx.setVisibility(View.GONE);
         }
-        Answer answer = ((ExaminationCardActivity)context).getAnswerMap().get(index);
+        Answer answer = ((ExaminationCardActivity) context).getAnswerMap().get(index);
         if (answer != null) {
-            initedit(getActivity(), editor, answer.getQuestion(),questionBean.getQuestionContent());
+            initedit(getActivity(), editor, answer.getQuestion(), questionBean.getQuestionContent());
         } else {
-            String content=questionBean.getQuestionContent();
-            String rc=content.replace("【】","【<h contenteditable=\"true\"> </h>】");
-            initedit(getActivity(), editor, rc,rc);
+            String content = questionBean.getQuestionContent();
+            String rc = content.replace("【】", "【<h contenteditable=\"true\"></h>】");
+            initedit(getActivity(), editor, rc, rc);
         }
         final int questionType = Integer.valueOf(questionBean.getQuestionType());
         sb = new StringBuffer();
@@ -95,7 +105,7 @@ public class QuestionItemFragment extends Fragment {
                     answer.setType(questionType);
                     answer.setSelectoption(lv.getCheckedItemIds());
                     answer.setAnswers(getAnsOption(lv.getCheckedItemIds(), (ArrayList<QuestionOptionBean>) questionBean.getQuestionOptions()));
-                    ((ExaminationCardActivity)context).getAnswerMap().put(index, answer);
+                    ((ExaminationCardActivity) context).getAnswerMap().put(index, answer);
                 }
             });
             if (answer != null) {
@@ -107,13 +117,7 @@ public class QuestionItemFragment extends Fragment {
                 }
 
             }
-            dtjx.setOnClickListener(new OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         } else if (questionType == 4) {
             subjectType.setText("多选题");
             adapter = new OptionsListAdapter(getActivity(), questionBean.getQuestionOptions(), lv, index);
@@ -131,7 +135,7 @@ public class QuestionItemFragment extends Fragment {
                     answer.setType(questionType);
                     answer.setSelectoption(lv.getCheckedItemIds());
                     answer.setAnswers(getAnsOption(lv.getCheckedItemIds(), (ArrayList<QuestionOptionBean>) questionBean.getQuestionOptions()));
-                    ((ExaminationCardActivity)context).getAnswerMap().put(index, answer);
+                    ((ExaminationCardActivity) context).getAnswerMap().put(index, answer);
                 }
             });
             if (answer != null) {
@@ -143,13 +147,7 @@ public class QuestionItemFragment extends Fragment {
                 }
 
             }
-            dtjx.setOnClickListener(new OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         } else if (questionType == 2) {
             subjectType.setText("填空题");
         } else {
@@ -169,7 +167,7 @@ public class QuestionItemFragment extends Fragment {
                     answer.setType(questionType);
                     answer.setSelectoption(lv.getCheckedItemIds());
                     answer.setAnswers(getAnsOption(lv.getCheckedItemIds(), (ArrayList<QuestionOptionBean>) questionBean.getQuestionOptions()));
-                    ((ExaminationCardActivity)context).getAnswerMap().put(index, answer);
+                    ((ExaminationCardActivity) context).getAnswerMap().put(index, answer);
                 }
             });
             if (answer != null) {
@@ -227,9 +225,11 @@ public class QuestionItemFragment extends Fragment {
         mEditor.focusEditor();
         mEditor.setEdit(html);
         mEditor.setEditorAble(false);
+//        mQcontent = qcontent;
         mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
             @Override
             public void onTextChange(String text) {
+//                mText = text;
                 Answer answer = new Answer();
                 answer.setPosition(index);
                 answer.setQuestion(text);
@@ -240,19 +240,19 @@ public class QuestionItemFragment extends Fragment {
         });
     }
 
-    private ArrayList<String> getAnsOption(long[] select, ArrayList<QuestionOptionBean> options){
-        ArrayList<String> temp=new ArrayList<>();
-        for(int i=0;i<select.length;i++){
-            QuestionOptionBean optionBean=options.get((int) select[i]);
-            if(optionBean!=null){
+    private ArrayList<String> getAnsOption(long[] select, ArrayList<QuestionOptionBean> options) {
+        ArrayList<String> temp = new ArrayList<>();
+        for (int i = 0; i < select.length; i++) {
+            QuestionOptionBean optionBean = options.get((int) select[i]);
+            if (optionBean != null) {
                 temp.add(optionBean.getOptionCode());
             }
         }
         return temp;
     }
 
-    private ArrayList<String> getAnsOption(String text,String qcontent){
-        return Diff_match_patch.getAns(text,qcontent);
+    private ArrayList<String> getAnsOption(String text, String qcontent) {
+        return Diff_match_patch.getAns(text, qcontent);
     }
 
     @Override
@@ -260,9 +260,29 @@ public class QuestionItemFragment extends Fragment {
         super.onAttach(activity);
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(MessageEvent messageEvent) {
+        String message = messageEvent.getMessage();
+        if (message.equals("next_tm")) {
+            int questionType = Integer.valueOf(questionBean.getQuestionType());
+            if (questionType == 2) {
+                Answer answer = new Answer();
+                answer.setPosition(index);
+                answer.setQuestion(mText);
+                ArrayList<String> as=getAnsOption(mText,mQcontent);
+                answer.setAnswers(as);
+                ((ExaminationCardActivity) context).getAnswerMap().put(index, answer);
+            }
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
 }

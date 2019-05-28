@@ -143,7 +143,8 @@ public class WjzdFragment extends BasiceFragment {
 
     private void getStudysData(int dep,int pageIndex) {
         ApiService apiService = RetrofitUtil.getRetrofitInstance(getActivity()).create(ApiService.class);
-        Call<String> call1 = apiService.getStudys(dep,1, -1, "", pageIndex, mPageSize, "");
+        Call<String> call1 = apiService.getStudys(dep,1, -1, "", pageIndex, mPageSize,
+                UserSPUtil.getInstance(getActivity()).getInt(Contents.KEY_USER_COMPANY_ID),"");
         call1.enqueue(new Callback<String>() {
             @SuppressLint("WrongConstant")
             @Override

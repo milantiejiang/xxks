@@ -61,6 +61,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             }
         }else {
             viewHolder.icon.setBackgroundColor(Util.getRandomColor());
+            viewHolder.icon.setVisibility(View.GONE);
         }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

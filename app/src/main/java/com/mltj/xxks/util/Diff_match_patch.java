@@ -2310,6 +2310,7 @@ public class Diff_match_patch {
         }
     }
     public static ArrayList<String> getAns(String altbe,String altaf){
+        ans.clear();
         Diff_match_patch diff_match_patch=new Diff_match_patch();
         //字符串1  altbe  字符串2  altaf
         List<Integer> beList = rememberSpacing(altbe);

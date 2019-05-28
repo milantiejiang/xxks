@@ -16,6 +16,7 @@ public class TestPaper implements Serializable {
     private long longCreateDate;
     private boolean allowSubmission;
 
+
     public int getId() {
         return id;
     }

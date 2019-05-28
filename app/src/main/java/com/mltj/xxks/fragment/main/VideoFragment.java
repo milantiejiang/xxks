@@ -18,7 +18,9 @@ import com.mltj.xxks.bean.StudyResponse;
 import com.mltj.xxks.fragment.BasiceFragment;
 import com.mltj.xxks.net.ApiService;
 import com.mltj.xxks.net.RetrofitUtil;
+import com.mltj.xxks.util.Contents;
 import com.mltj.xxks.util.SpaceItemDecoration;
+import com.mltj.xxks.util.UserSPUtil;
 import com.mltj.xxks.widget.RefreshHeaderView;
 
 import java.util.ArrayList;
@@ -71,8 +73,10 @@ public class VideoFragment extends BasiceFragment {
     }
 
     private void getData(int pageIndex) {
+        int company=UserSPUtil.getInstance(getActivity()).getInt(Contents.KEY_USER_COMPANY_ID);
         ApiService apiService = RetrofitUtil.getRetrofitInstance(getActivity()).create(ApiService.class);
-        Call<String> call1 = apiService.getStudys(-1,2, -1, "", pageIndex, mPageSize, "");
+        Call<String> call1 = apiService.getStudys(-1,2, -1, "", pageIndex, mPageSize,
+                company,"");
         call1.enqueue(new Callback<String>() {
             @SuppressLint("WrongConstant")
             @Override

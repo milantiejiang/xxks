@@ -5,8 +5,10 @@ import android.content.Context;
 import com.mltj.xxks.util.Contents;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.ConnectionSpec;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -37,6 +39,11 @@ public class RetrofitUtil {
         });
         //设置五秒钟连接超时
         httpClient.connectTimeout(5, TimeUnit.SECONDS);
+        httpClient.connectionSpecs(Arrays.asList(
+                ConnectionSpec.MODERN_TLS,
+                ConnectionSpec.COMPATIBLE_TLS,
+                ConnectionSpec.CLEARTEXT));
+
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Contents.getBaseUrl(context))

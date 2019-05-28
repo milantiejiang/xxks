@@ -15,7 +15,6 @@ import com.mltj.xxks.bean.DateCategory;
 import com.mltj.xxks.bean.MessageEvent;
 import com.mltj.xxks.fragment.main.CompanyRankingFragment;
 import com.mltj.xxks.fragment.main.DepmentRankingFragment;
-import com.mltj.xxks.fragment.main.TotalRankingFragment;
 import com.mltj.xxks.util.Contents;
 import com.mltj.xxks.util.SpUtils;
 import com.mltj.xxks.util.UserSPUtil;
@@ -89,14 +88,14 @@ public class RankingActivity extends BasiceActivity implements View.OnClickListe
         messageEvent.setValue(mcompany + "," + mdep);
         EventBus.getDefault().post(messageEvent);
 
-        titles.add("总榜");
+//        titles.add("总榜");
         titles.add("公司榜");
         titles.add("部门榜");
         fragmentList = new ArrayList<>();
 
-        fragmentList.add(new TotalRankingFragment(mcompany,mdep));
-        fragmentList.add(new CompanyRankingFragment(mcompany,mdep));
-        fragmentList.add(new DepmentRankingFragment(mcompany,mdep));
+//        fragmentList.add(new TotalRankingFragment(mcompany,mdep));
+        fragmentList.add(new CompanyRankingFragment(mcompany, mdep));
+        fragmentList.add(new DepmentRankingFragment(mcompany, mdep));
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -123,18 +122,24 @@ public class RankingActivity extends BasiceActivity implements View.OnClickListe
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1)
-                        + options2Items.get(options1).get(option2);
-                selcet.setText(tx);
-                if (deps != null) {
-                    mdep = deps.get(options1).get(option2).getId();
+
+                if (options2Items.size() != 0 &&
+                        options1Items.size() != 0 &&
+                        options2Items.get(options1).size() != 0) {
+                    String tx = options1Items.get(options1)
+                            + options2Items.get(options1).get(option2);
+                    selcet.setText(tx);
+                    if (deps != null) {
+                        mdep = deps.get(options1).get(option2).getId();
+                    }
+                    if (companys != null) {
+                        mcompany = companys.get(options1).getId();
+                    }
+
+                    MessageEvent messageEvent = new MessageEvent("");
+                    messageEvent.setValue(mcompany + "," + mdep);
+                    EventBus.getDefault().post(messageEvent);
                 }
-                if (companys != null) {
-                    mcompany = companys.get(options1).getId();
-                }
-                MessageEvent messageEvent = new MessageEvent("");
-                messageEvent.setValue(mcompany + "," + mdep);
-                EventBus.getDefault().post(messageEvent);
             }
         }).build();
         pvOptions.setPicker(options1Items, options2Items);

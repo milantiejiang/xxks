@@ -31,6 +31,7 @@ public interface ApiService {
                          @Query("orderBy") String orderBy,
                          @Query("pageIndex") int pageIndex,
                          @Query("pageSize") int pageSize,
+                         @Query("company") int company,
                          @Query("token") String token);
 
     @GET("/study/api/studyContent/findPage")
@@ -41,6 +42,7 @@ public interface ApiService {
             @Query("orderBy") String orderBy,
             @Query("pageIndex") int pageIndex,
             @Query("pageSize") int pageSize,
+            @Query("company") int company,
             @Query("token") String token);
 
 
@@ -48,6 +50,7 @@ public interface ApiService {
     Call<String> getGongGao(@Query("orderBy") String orderBy,
                             @Query("pageIndex") int pageIndex,
                             @Query("pageSize") int pageSize,
+                            @Query("company") int company,
                             @Query("token") String token);
 
     @GET("/study/api/examinationPaper/findPage")
@@ -59,6 +62,10 @@ public interface ApiService {
     @GET("/study/api/questionBank/selectQuestionBankByPaperId")
     Call<String> getTm(@Query("examinationPaperId") int examinationPaperId,
                        @Query("token") String token);
+
+    @GET("/study/api/examinationPaper/getExaminationPaperByType")
+    Call<String> getTm2(@Query("paperType") int paperType,
+                       @Query("userId") int userId);
 
     @POST("/study/api/examinationRecord/insertExaminationRecord")
     Call<String> pushShiJuan(@Query("duration") long duration,

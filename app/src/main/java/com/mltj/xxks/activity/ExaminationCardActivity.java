@@ -30,7 +30,7 @@ import com.mltj.xxks.bean.BasicResponse;
 import com.mltj.xxks.bean.DateCategory;
 import com.mltj.xxks.bean.MessageEvent;
 import com.mltj.xxks.bean.QuestionBean;
-import com.mltj.xxks.bean.QuestionBeanResponse;
+import com.mltj.xxks.bean.QuestionBeanResponse2;
 import com.mltj.xxks.bean.TestPaper;
 import com.mltj.xxks.bean.TestPaperResponse2;
 import com.mltj.xxks.net.ApiService;
@@ -73,6 +73,8 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
     RelativeLayout rlPre;
     @BindView(R.id.next)
     TextView next;
+    @BindView(R.id.tj)
+    TextView tj;
     @BindView(R.id.pre)
     TextView pre;
     @BindView(R.id.title)
@@ -80,7 +82,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
     @BindView(R.id.sj_title)
     TextView sjTitle;
 
-    int testPagerType=-1;
+    int testPagerType = -1;
     private ItemAdapter pagerAdapter;
     public static int currentIndex = 0;
     private CountDownTimer mTimer;
@@ -88,6 +90,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
     TestPaper testPaper;
     long startTime;
     long endTime;
+    QuestionBeanResponse2.TestPaper tp = null;
 
     public static void start(Context context, TestPaper testPaper) {
         Intent intent = new Intent(context, ExaminationCardActivity.class);
@@ -108,38 +111,40 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
 
     @Override
     protected void init() {
-        Calendar calendar=Calendar.getInstance();
-        startTime=calendar.getTimeInMillis();
+        Calendar calendar = Calendar.getInstance();
+        startTime = calendar.getTimeInMillis();
         testPaper = (TestPaper) getIntent().getSerializableExtra("object");
-        testPagerType=getIntent().getIntExtra("type",-1);
+        testPagerType = getIntent().getIntExtra("type", -1);
         if (testPaper != null) {
             sjTitle.setText(testPaper.getTitle());
             title.setText(testPaper.getExaminationPaperCategory());
-            getData(testPaper.getId());
+//            getData(testPaper.getId());
+            getTM(testPaper.getId());
         }
-        if(testPagerType!=-1){
+        if (testPagerType != -1) {
             getTestPager(testPagerType);
+            getTM(testPagerType);
         }
         EventBus.getDefault().register(this);
         startCounter();
     }
 
 
-    @OnClick({R.id.next, R.id.pre, R.id.submit, R.id.rl_pre, R.id.back, R.id.close, R.id.dtk})
+    @OnClick({R.id.next, R.id.pre, R.id.submit, R.id.rl_pre, R.id.back, R.id.close, R.id.dtk,R.id.tj})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.next:
-                if (currentIndex == questionlist.size()) {
-                    if(testPaper.isAllowSubmission()){
-                        calculation();
-                    }else {
-                        Log.e("ExaminationCardActivity","不能提交");
-                        Toast.makeText(this,"该试卷不能提交",Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    jumpToNext();
+            case R.id.tj:
+                if (testPaper.isAllowSubmission()) {
+                    calculation();
+                }else {
+                    tj.setVisibility(View.GONE);
+                    Log.e("ExaminationCardActivity", "不能提交");
+                    Toast.makeText(this, "该试卷不能提交", Toast.LENGTH_LONG).show();
                 }
+                break;
+            case R.id.next:
+                jumpToNext();
                 break;
             case R.id.pre:
                 jumpToPre();
@@ -199,8 +204,8 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
         for (int i = 0; i < questionlist.size(); i++) {
             Log.d("Answer", i + ":" + questionlist.get(i).getReferenceAnswer());
         }
-        if(answerMap.size()==0){
-            Toast.makeText(this,"请答题",Toast.LENGTH_LONG).show();
+        if (answerMap.size() == 0) {
+            Toast.makeText(this, "请答题", Toast.LENGTH_LONG).show();
             return;
         }
         for (Map.Entry<Integer, Answer> entry : answerMap.entrySet()) {
@@ -219,9 +224,12 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
         }
         double t = rewindingMap.size();
 //        double s = (k / t) * 100;
-        int s= (int) (k*questionlist.get(0).getSingleScore());
-        Log.d("Score", s+"");
-        sendData(s,wrongStr.toString());
+        int s = 0;
+        if (tp != null) {
+            s = (int) (k * tp.getSingleScore());
+        }
+        Log.d("Score", s + "");
+        sendData(s, wrongStr.toString());
     }
 
     public void jumpToNext() {
@@ -235,10 +243,10 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
     }
 
     private void sendData(final int score, String wrongId) {
-        Calendar calendar=Calendar.getInstance();
-        endTime=calendar.getTimeInMillis();
-        long duration=endTime-startTime;
-        Log.d("Duration Time",Util.getStandardTime(duration));
+        Calendar calendar = Calendar.getInstance();
+        endTime = calendar.getTimeInMillis();
+        long duration = endTime - startTime;
+        Log.d("Duration Time", Util.getStandardTime(duration));
         ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
         Call<String> call1 = apiService.pushShiJuan(duration, testPaper.getId(),
                 "", score, UserSPUtil.getInstance(this).getInt(Contents.KEY_USER_ID), wrongId);
@@ -248,11 +256,11 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
             public void onResponse(Call<String> call, Response<String> response) {
                 String json = response.body();
                 Gson gson = new Gson();
-                BasicResponse object=gson.fromJson(json,BasicResponse.class);
-                if(object!=null){
-                    int code=object.getCode();
-                    if(code==200){
-                        ResultActivity.start(ExaminationCardActivity.this,score);
+                BasicResponse object = gson.fromJson(json, BasicResponse.class);
+                if (object != null) {
+                    int code = object.getCode();
+                    if (code == 200) {
+                        ResultActivity.start(ExaminationCardActivity.this, score);
                         finish();
                     }
                 }
@@ -265,26 +273,126 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
         });
     }
 
-    private void getData(int id) {
+//    private void getData(int id) {
+//        ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
+//        Call<String> call1 = apiService.getTm(id, "");
+//        call1.enqueue(new Callback<String>() {
+//            @SuppressLint("WrongConstant")
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                String json = response.body();
+//                Gson gson = new Gson();
+//                QuestionBeanResponse object = gson.fromJson(json, QuestionBeanResponse.class);
+//                if (object != null) {
+//                    ArrayList<QuestionBean> list = object.getData();
+//                    if (list != null) {
+//                        questionlist.addAll(list);
+//                    }
+//                }
+//
+//                pager.setText("1/" + questionlist.size());
+//                viewpager.setCurrentItem(0);
+//                pagerAdapter = new ItemAdapter(getSupportFragmentManager(), ExaminationCardActivity.this, questionlist);
+//                viewpager.setAdapter(pagerAdapter);
+//                viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//
+//                    @RequiresApi(api = Build.VERSION_CODES.M)
+//                    @Override
+//                    public void onPageSelected(int p) {
+//                        int i = p + 1;
+//                        currentIndex = i;
+//                        pager.setText(i + "/" + questionlist.size());
+//                        if (i == questionlist.size()) {
+//                            pre.setClickable(true);
+//                            rlPre.setBackgroundColor(getColor(R.color.withe));
+//                            pre.setTextColor(getColor(R.color.black));
+//                            pre.setText("上一题");
+//                            next.setText("提交");
+//                        } else if (i == 1) {
+//                            pre.setClickable(false);
+//                            rlPre.setBackgroundColor(getColor(R.color.gray1));
+//                            pre.setTextColor(getColor(R.color.gray));
+//                            pre.setText("上一题");
+//                            next.setText("下一题");
+//                        } else {
+//                            pre.setClickable(true);
+//                            rlPre.setBackgroundColor(getColor(R.color.withe));
+//                            pre.setTextColor(getColor(R.color.black));
+//                            pre.setText("上一题");
+//                            next.setText("下一题");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onPageScrolled(int arg0, float arg1, int arg2) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onPageScrollStateChanged(int position) {
+////                        currentIndex = position;
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//            }
+//        });
+//
+//    }
+
+    private void getTestPager(int type) {
         ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
-        Call<String> call1 = apiService.getTm(id, "");
+        Call<String> call1 = apiService.getExaminationPaperByType("", type, UserSPUtil.getInstance(this).getInt(Contents.KEY_USER_ID));
         call1.enqueue(new Callback<String>() {
             @SuppressLint("WrongConstant")
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String json = response.body();
                 Gson gson = new Gson();
-                QuestionBeanResponse object = gson.fromJson(json, QuestionBeanResponse.class);
+                TestPaperResponse2 object = gson.fromJson(json, TestPaperResponse2.class);
                 if (object != null) {
-                    ArrayList<QuestionBean> list = object.getData();
-                    if (list != null) {
-                        questionlist.addAll(list);
+                    if (object.getData() != null) {
+                        testPaper = object.getData();
+                        sjTitle.setText(testPaper.getTitle());
+                        title.setText(testPaper.getExaminationPaperCategory());
+//                        getData(testPaper.getId());
                     }
                 }
+            }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+            }
+        });
+    }
+
+    private void getTM(int type) {
+        ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
+        Call<String> call1 = apiService.getTm2(type, UserSPUtil.getInstance(this).getInt(Contents.KEY_USER_ID));
+        call1.enqueue(new Callback<String>() {
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String json = response.body();
+                Gson gson = new Gson();
+                QuestionBeanResponse2 object = gson.fromJson(json, QuestionBeanResponse2.class);
+
+                if (object != null) {
+                    tp = object.getData();
+                    if (tp != null) {
+                        ArrayList<QuestionBean> list = tp.getQuestionBankList();
+                        if (list != null) {
+                            questionlist.addAll(list);
+                        }
+                    } else {
+                        return;
+                    }
+                }
                 pager.setText("1/" + questionlist.size());
                 viewpager.setCurrentItem(0);
-                pagerAdapter = new ItemAdapter(getSupportFragmentManager(), ExaminationCardActivity.this, questionlist);
+                pagerAdapter = new ItemAdapter(getSupportFragmentManager(), ExaminationCardActivity.this, tp);
                 viewpager.setAdapter(pagerAdapter);
                 viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -299,19 +407,22 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
                             rlPre.setBackgroundColor(getColor(R.color.withe));
                             pre.setTextColor(getColor(R.color.black));
                             pre.setText("上一题");
-                            next.setText("提交");
+//                            next.setText("提交");
+                            next.setTextColor(getColor(R.color.gray));
                         } else if (i == 1) {
                             pre.setClickable(false);
                             rlPre.setBackgroundColor(getColor(R.color.gray1));
                             pre.setTextColor(getColor(R.color.gray));
                             pre.setText("上一题");
                             next.setText("下一题");
+                            next.setTextColor(getColor(R.color.withe));
                         } else {
                             pre.setClickable(true);
                             rlPre.setBackgroundColor(getColor(R.color.withe));
                             pre.setTextColor(getColor(R.color.black));
                             pre.setText("上一题");
                             next.setText("下一题");
+                            next.setTextColor(getColor(R.color.withe));
                         }
                     }
 
@@ -325,33 +436,6 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
 //                        currentIndex = position;
                     }
                 });
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-            }
-        });
-
-    }
-
-    private void getTestPager(int type){
-        ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
-        Call<String> call1 = apiService.getExaminationPaperByType("", type,UserSPUtil.getInstance(this).getInt(Contents.KEY_USER_ID));
-        call1.enqueue(new Callback<String>() {
-            @SuppressLint("WrongConstant")
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                String json = response.body();
-                Gson gson = new Gson();
-                TestPaperResponse2 object = gson.fromJson(json, TestPaperResponse2.class);
-                if (object != null) {
-                    if(object.getData()!=null){
-                        testPaper=object.getData();
-                        sjTitle.setText(testPaper.getTitle());
-                        title.setText(testPaper.getExaminationPaperCategory());
-                        getData(testPaper.getId());
-                    }
-                }
             }
 
             @Override

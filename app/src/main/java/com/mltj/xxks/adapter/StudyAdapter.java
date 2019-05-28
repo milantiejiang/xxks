@@ -52,6 +52,7 @@ public class StudyAdapter extends RecyclerView.Adapter<StudyAdapter.ViewHolder> 
             }
         }else {
             viewHolder.icon.setBackgroundColor(Util.getRandomColor());
+            viewHolder.icon.setVisibility(View.GONE);
         }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

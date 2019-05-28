@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,7 +19,9 @@ import com.mltj.xxks.bean.NoticeResponse;
 import com.mltj.xxks.fragment.BasiceFragment;
 import com.mltj.xxks.net.ApiService;
 import com.mltj.xxks.net.RetrofitUtil;
+import com.mltj.xxks.util.Contents;
 import com.mltj.xxks.util.SpaceItemDecoration;
+import com.mltj.xxks.util.UserSPUtil;
 import com.mltj.xxks.widget.RefreshHeaderView;
 
 import java.util.ArrayList;
@@ -91,8 +94,9 @@ public class HomeFragment extends BasiceFragment {
     }
 
     private void getData(int pageIndex) {
+        int company=UserSPUtil.getInstance(getActivity()).getInt(Contents.KEY_USER_COMPANY_ID);
         ApiService apiService = RetrofitUtil.getRetrofitInstance(getActivity()).create(ApiService.class);
-        Call<String> call1 = apiService.getGongGao("", pageIndex, mPageSize, "");
+        Call<String> call1 = apiService.getGongGao("", pageIndex, mPageSize,company,"");
         call1.enqueue(new Callback<String>() {
             @SuppressLint("WrongConstant")
             @Override
@@ -132,7 +136,7 @@ public class HomeFragment extends BasiceFragment {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
+                Log.e("HomeFragment", "failure");
             }
         });
 

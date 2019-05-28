@@ -3,6 +3,7 @@ package com.mltj.xxks.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -45,6 +46,40 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
     TextView kszt;
     @BindView(R.id.score)
     TextView score;
+
+    @BindView(R.id.ydxx_score_ts)
+    TextView ydxxts;
+    @BindView(R.id.login_score_ts)
+    TextView logints;
+    @BindView(R.id.ydxxsc_score_ts)
+    TextView ydxxscts;
+    @BindView(R.id.mzyk_score_ts)
+    TextView mzykts;
+    @BindView(R.id.mryl_score_ts)
+    TextView mrylts;
+    @BindView(R.id.gksp_score_ts)
+    TextView gkspts;
+    @BindView(R.id.gkspsc_score_ts)
+    TextView gkspscts;
+    @BindView(R.id.kszt_score_ts)
+    TextView ksztts;
+
+    @BindView(R.id.progress_gksp)
+    ProgressBar progressgksp;
+    @BindView(R.id.progress_gkspsc)
+    ProgressBar progressgkspsc;
+    @BindView(R.id.progress_kszt)
+    ProgressBar progresskszt;
+    @BindView(R.id.progress_login)
+    ProgressBar progresslogin;
+    @BindView(R.id.progress_mryl)
+    ProgressBar progressmryl;
+    @BindView(R.id.progress_mzyk)
+    ProgressBar progressmzyk;
+    @BindView(R.id.progress_ydxx)
+    ProgressBar progressydxx;
+    @BindView(R.id.progress_ydxxsc)
+    ProgressBar progressydxxsc;
 
     @Override
     protected int initLayout() {
@@ -109,35 +144,51 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
                                 switch (rule.getCreditType()) {
                                     case 38:
                                         //登录
-                                        login.setText(rule.getIntegralConfigurationDescription());
+                                        logints.setText(rule.getIntegralConfigurationDescription());
+                                        login.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
+                                        progresslogin.setProgress((rule.getScore()/rule.getUpperLimit())*100);
                                         break;
                                     case 39:
                                         //每日一练
-                                        mryl.setText(rule.getIntegralConfigurationDescription());
+                                        mrylts.setText(rule.getIntegralConfigurationDescription());
+                                        mryl.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
+                                        progressmryl.setProgress((rule.getScore()/rule.getUpperLimit())*100);
                                         break;
                                     case 40:
                                         //每周一考
-                                        mzyk.setText(rule.getIntegralConfigurationDescription());
+                                        mzykts.setText(rule.getIntegralConfigurationDescription());
+                                        mzyk.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
+                                        progressmzyk.setProgress((rule.getScore()/rule.getUpperLimit())*100);
                                         break;
                                     case 41:
                                         //专题考试
-                                        kszt.setText(rule.getIntegralConfigurationDescription());
+                                        ksztts.setText(rule.getIntegralConfigurationDescription());
+                                        kszt.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
+                                        progresskszt.setProgress((rule.getScore()/rule.getUpperLimit())*100);
                                         break;
                                     case 42:
                                         //阅读学习时长
-                                        ydxxsc.setText(rule.getIntegralConfigurationDescription());
+                                        ydxxscts.setText(rule.getIntegralConfigurationDescription());
+                                        ydxxsc.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
+                                        progressydxxsc.setProgress((rule.getScore()/rule.getUpperLimit())*100);
                                         break;
                                     case 43:
                                         //观看视频时长
-                                        gkspsc.setText(rule.getIntegralConfigurationDescription());
+                                        gkspscts.setText(rule.getIntegralConfigurationDescription());
+                                        gkspsc.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
+                                        progressgkspsc.setProgress((rule.getScore()/rule.getUpperLimit())*100);
                                         break;
                                     case 44:
                                         //阅读学习
-                                        ydxx.setText(rule.getIntegralConfigurationDescription());
+                                        ydxxts.setText(rule.getIntegralConfigurationDescription());
+                                        ydxx.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
+                                        progressydxx.setProgress((rule.getScore()/rule.getUpperLimit())*100);
                                         break;
                                     case 45:
                                         //观看视频
-                                        gksp.setText(rule.getIntegralConfigurationDescription());
+                                        gkspts.setText(rule.getIntegralConfigurationDescription());
+                                        gksp.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
+                                        progressgksp.setProgress((rule.getScore()/rule.getUpperLimit())*100);
                                         break;
                                     default:
                                         break;
