@@ -472,7 +472,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_bottom_dialog);
         RecyclerView recyclerView = dialog.findViewById(R.id.recyclerview);
-        AnswerAdapter answerAdapter = new AnswerAdapter(context, size);
+        AnswerAdapter answerAdapter = new AnswerAdapter(context,answerMap,size);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.addItemDecoration(new SpaceItemDecoration(10));
         recyclerView.setAdapter(answerAdapter);

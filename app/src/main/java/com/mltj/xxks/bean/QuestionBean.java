@@ -25,6 +25,10 @@ public class QuestionBean extends BaseBean {
     private int singleScore;
     private int countAmmout;
 
+    private Long longWrongCreateDate;
+    private Integer examinationPaperCategory;
+    private Integer wrongId;
+
     public String getCreateDate() {
         return createDate;
     }
@@ -159,5 +163,29 @@ public class QuestionBean extends BaseBean {
 
     public void setCountAmmout(int countAmmout) {
         this.countAmmout = countAmmout;
+    }
+
+    public Long getLongWrongCreateDate() {
+        return longWrongCreateDate;
+    }
+
+    public void setLongWrongCreateDate(Long longWrongCreateDate) {
+        this.longWrongCreateDate = longWrongCreateDate;
+    }
+
+    public Integer getExaminationPaperCategory() {
+        return examinationPaperCategory;
+    }
+
+    public void setExaminationPaperCategory(Integer examinationPaperCategory) {
+        this.examinationPaperCategory = examinationPaperCategory;
+    }
+
+    public Integer getWrongId() {
+        return wrongId;
+    }
+
+    public void setWrongId(Integer wrongId) {
+        this.wrongId = wrongId;
     }
 }

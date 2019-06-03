@@ -86,6 +86,10 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".activity.ExaminationCardActivity2"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".activity.VideoDetailActivity"
             android:screenOrientation="portrait">
         </activity>

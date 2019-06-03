@@ -220,6 +220,14 @@ public class VideoDetailActivity extends BasiceActivity implements View.OnClickL
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Duration Time", "onRestart");
+        Calendar calendar = Calendar.getInstance();
+        startTime = calendar.getTimeInMillis();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         Calendar calendar = Calendar.getInstance();

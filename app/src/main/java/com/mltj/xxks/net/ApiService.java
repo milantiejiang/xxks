@@ -1,6 +1,9 @@
 package com.mltj.xxks.net;
 
+import com.mltj.xxks.bean.QuestionBean;
 import com.mltj.xxks.bean.Regist;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -67,6 +70,9 @@ public interface ApiService {
     Call<String> getTm2(@Query("paperType") int paperType,
                        @Query("userId") int userId);
 
+    @GET("/study/api/wrongQuestionRecord/getWrongQuestionByUserId")
+    Call<String> getTm3(@Query("userId") int userId);
+
     @POST("/study/api/examinationRecord/insertExaminationRecord")
     Call<String> pushShiJuan(@Query("duration") long duration,
                              @Query("examinationPaperId") int examinationPaperId,
@@ -74,6 +80,9 @@ public interface ApiService {
                              @Query("totalScore") double totalScore,
                              @Query("userId") int userId,
                              @Query("wrongQuestionStr") String wrongQuestionStr);
+
+    @POST("/study/api/wrongQuestionRecord/saveWrongQuestionResult")
+    Call<String> pushCt(@Query("userId") int userId,@Body ArrayList<QuestionBean> questionBanks);
 
     @POST("/study/api/studyContentRecord/insertStudyContentRecord")
     Call<String> insertStudyRecord(@Query("creditType") int creditType,

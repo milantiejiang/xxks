@@ -7,10 +7,10 @@ import android.widget.TextView;
 
 import com.mltj.xxks.R;
 import com.mltj.xxks.activity.ExaminationCardActivity;
+import com.mltj.xxks.activity.ExaminationCardActivity2;
 import com.mltj.xxks.activity.IntegralRuleActivity;
 import com.mltj.xxks.activity.RankingActivity;
 import com.mltj.xxks.activity.SettingsActivity;
-import com.mltj.xxks.activity.WrongActivity;
 import com.mltj.xxks.fragment.BasiceFragment;
 import com.mltj.xxks.util.Contents;
 import com.mltj.xxks.util.UserSPUtil;
@@ -82,8 +82,7 @@ public class UserFragment extends BasiceFragment implements View.OnClickListener
                 getActivity().startActivity(intent1);
                 break;
             case R.id.img_ct:
-                Intent intent2=new Intent(getActivity(), WrongActivity.class);
-                getActivity().startActivity(intent2);
+                ExaminationCardActivity2.start(getActivity());
                 break;
             case R.id.img_ph:
                 Intent intent3=new Intent(getActivity(), RankingActivity.class);

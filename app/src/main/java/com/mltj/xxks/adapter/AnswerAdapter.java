@@ -17,6 +17,7 @@ import com.mltj.xxks.bean.MessageEvent;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,9 +27,11 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
 
     private Context context;
     private List<Answer> data=new ArrayList<>();
+    private HashMap<Integer,Answer> answerHashMap=new HashMap<>();
 
-    public AnswerAdapter(Context context,int size) {
+    public AnswerAdapter(Context context, HashMap<Integer,Answer> answerMap,int size) {
         this.context = context;
+        this.answerHashMap=answerMap;
         initData(size);
     }
 
@@ -53,7 +56,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         final Answer answer=data.get(position);
         viewHolder.num.setText(answer.getPosition()+"");
-        Answer a=((ExaminationCardActivity)context).getAnswerMap().get(position);
+        Answer a=answerHashMap.get(position);
         if(a!=null){
             viewHolder.num.setTextColor(context.getColor(R.color.withe));
         }else {
