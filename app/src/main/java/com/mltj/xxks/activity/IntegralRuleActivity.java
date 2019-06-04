@@ -169,7 +169,7 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
                                         logints.setText(rule.getIntegralConfigurationDescription());
                                         login.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
                                         progresslogin.setProgress(calculateProgress(rule));
-                                        if(rule.getScore()==rule.getUpperLimit()){
+                                        if(!rule.isEnableBotton()){
                                             goLogin.setClickable(false);
                                             goLogin.setBackground(getDrawable(R.drawable.ellipse_gray_enable_bg));
                                         }
@@ -179,7 +179,7 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
                                         mrylts.setText(rule.getIntegralConfigurationDescription());
                                         mryl.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
                                         progressmryl.setProgress(calculateProgress(rule));
-                                        if(rule.getScore()==rule.getUpperLimit()){
+                                        if(!rule.isEnableBotton()){
                                             goMryl.setClickable(false);
                                             goMryl.setBackground(getDrawable(R.drawable.ellipse_gray_enable_bg));
                                         }
@@ -189,7 +189,7 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
                                         mzykts.setText(rule.getIntegralConfigurationDescription());
                                         mzyk.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
                                         progressmzyk.setProgress(calculateProgress(rule));
-                                        if(rule.getScore()==rule.getUpperLimit()){
+                                        if(!rule.isEnableBotton()){
                                             goMzyk.setClickable(false);
                                             goMzyk.setBackground(getDrawable(R.drawable.ellipse_gray_enable_bg));
                                         }
@@ -199,7 +199,7 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
                                         ksztts.setText(rule.getIntegralConfigurationDescription());
                                         kszt.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
                                         progresskszt.setProgress(calculateProgress(rule));
-                                        if(rule.getScore()==rule.getUpperLimit()){
+                                        if(!rule.isEnableBotton()){
                                             goKszt.setClickable(false);
                                             goKszt.setBackground(getDrawable(R.drawable.ellipse_gray_enable_bg));
                                         }
@@ -209,7 +209,7 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
                                         ydxxscts.setText(rule.getIntegralConfigurationDescription());
                                         ydxxsc.setText(rule.getUserEarnsPoints()+"/"+"上限"+rule.getUpperLimit()+"分");
                                         progressydxxsc.setProgress(calculateProgress(rule));
-                                        if(rule.getScore()==rule.getUpperLimit()){
+                                        if(!rule.isEnableBotton()){
                                             goYdxxsc.setClickable(false);
                                             goYdxxsc.setBackground(getDrawable(R.drawable.ellipse_gray_enable_bg));
                                         }

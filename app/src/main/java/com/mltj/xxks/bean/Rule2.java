@@ -19,6 +19,7 @@ public class Rule2 implements Serializable {
     private String integralConfigurationDescription;
     private String userEarnsPoints;
     private int score;
+    private boolean enableBotton=true;
 
     public int getId() {
         return id;
@@ -146,5 +147,13 @@ public class Rule2 implements Serializable {
 
     public void setUserEarnsPoints(String userEarnsPoints) {
         this.userEarnsPoints = userEarnsPoints;
+    }
+
+    public boolean isEnableBotton() {
+        return enableBotton;
+    }
+
+    public void setEnableBotton(boolean enableBotton) {
+        this.enableBotton = enableBotton;
     }
 }

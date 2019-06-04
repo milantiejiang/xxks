@@ -24,14 +24,14 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.mltj.xxks.R;
 import com.mltj.xxks.adapter.AnswerAdapter;
-import com.mltj.xxks.adapter.ItemAdapter;
+import com.mltj.xxks.adapter.ItemAdapter2;
 import com.mltj.xxks.bean.Answer;
 import com.mltj.xxks.bean.BasicResponse;
 import com.mltj.xxks.bean.DateCategory;
 import com.mltj.xxks.bean.MessageEvent;
 import com.mltj.xxks.bean.QuestionBean;
 import com.mltj.xxks.bean.QuestionBeanResponse2;
-import com.mltj.xxks.bean.TestPaper;
+import com.mltj.xxks.bean.QuestionBeanResponse3;
 import com.mltj.xxks.bean.TestPaperResponse2;
 import com.mltj.xxks.net.ApiService;
 import com.mltj.xxks.net.RetrofitUtil;
@@ -56,10 +56,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ExaminationCardActivity extends BasiceActivity implements View.OnClickListener {
+public class ExaminationCardActivity2 extends BasiceActivity implements View.OnClickListener {
     public static final String EVENT_PAGER_JUMP = "EVENT_PAGER_JUMP";
     private ArrayList<DateCategory> tm = (ArrayList<DateCategory>) SpUtils.getDataList(this, Contents.KEY_DATA_CATEGORY_TM, DateCategory.class);
     public ArrayList<QuestionBean> questionlist = new ArrayList<QuestionBean>();
+    public ArrayList<QuestionBean> rightAnswers=new ArrayList<>();
     public HashMap<Integer, Answer> answerMap = new HashMap<>();
     public HashMap<Integer, Boolean> rewindingMap = new HashMap<>();
 
@@ -83,74 +84,41 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
     TextView sjTitle;
 
     int testPagerType = -1;
-    private ItemAdapter pagerAdapter;
+    private ItemAdapter2 pagerAdapter;
     public static int currentIndex = 0;
     private CountDownTimer mTimer;
     Dialog dialog;
-    TestPaper testPaper=null;
+
     long startTime;
     long endTime;
     QuestionBeanResponse2.TestPaper tp = null;
 
-    public static void start(Context context, TestPaper testPaper) {
-        Intent intent = new Intent(context, ExaminationCardActivity.class);
-        intent.putExtra("object", testPaper);
-        context.startActivity(intent);
-    }
-
-    public static void start(Context context, int type) {
-        Intent intent = new Intent(context, ExaminationCardActivity.class);
-        intent.putExtra("type", type);
+    public static void start(Context context) {
+        Intent intent = new Intent(context, ExaminationCardActivity2.class);
         context.startActivity(intent);
     }
 
     @Override
     protected int initLayout() {
-        return R.layout.activity_examination_card;
+        return R.layout.activity_examination_card2;
     }
 
     @Override
     protected void init() {
         Calendar calendar = Calendar.getInstance();
         startTime = calendar.getTimeInMillis();
-        testPaper = (TestPaper) getIntent().getSerializableExtra("object");
-        testPagerType = getIntent().getIntExtra("type", -1);
-        if (testPaper != null) {
-            sjTitle.setText(testPaper.getTitle());
-            title.setText(testPaper.getExaminationPaperCategory());
-//            getData(testPaper.getId());
-            getTM(testPaper.getId());
-        }else {
-            if (testPagerType != -1) {
-                getTestPager(testPagerType);
-                getTM(testPagerType);
-                if(testPagerType==14){
-                    title.setText("智能答题");
-                }else if(testPagerType==15){
-                    title.setText("每周一答");
-                }else if(testPagerType==17){
-                    title.setText("专题考试");
-                }
-            }
-        }
-
+        getTM();
         EventBus.getDefault().register(this);
-        startCounter();
+//        startCounter();
     }
 
 
-    @OnClick({R.id.next, R.id.pre, R.id.submit, R.id.rl_pre, R.id.back, R.id.close, R.id.dtk,R.id.tj})
+    @OnClick({R.id.next, R.id.pre, R.id.submit, R.id.rl_pre, R.id.back, R.id.close, R.id.dtk, R.id.tj,R.id.ll_more})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tj:
-                if (testPaper.isAllowSubmission()) {
-                    calculation();
-                }else {
-                    tj.setVisibility(View.GONE);
-                    Log.e("ExaminationCardActivity", "不能提交");
-                    Toast.makeText(this, "该试卷不能提交", Toast.LENGTH_LONG).show();
-                }
+                calculation();
                 break;
             case R.id.next:
                 jumpToNext();
@@ -159,13 +127,17 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
                 jumpToPre();
                 break;
             case R.id.back:
-                Util.showLogoutDialog(ExaminationCardActivity.this);
+                Util.showLogoutDialog(ExaminationCardActivity2.this);
                 break;
             case R.id.close:
                 finish();
                 break;
             case R.id.dtk:
-                showBottomDialog(ExaminationCardActivity.this, questionlist.size());
+                showBottomDialog(ExaminationCardActivity2.this, questionlist.size());
+                break;
+            case R.id.ll_more:
+                Intent intent=new Intent(ExaminationCardActivity2.this,WrongActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -220,25 +192,19 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
         for (Map.Entry<Integer, Answer> entry : answerMap.entrySet()) {
             Log.d("MyAnswer", entry.getKey() + ":" + entry.getValue().getAnswers().toString());
         }
-        double k = 0;
+        int k = 0;
         StringBuffer wrongStr = new StringBuffer();
         for (Map.Entry<Integer, Boolean> entry : rewindingMap.entrySet()) {
             Log.d("Result", entry.getKey() + ":" + entry.getValue());
             if (entry.getValue()) {
                 k++;
+                rightAnswers.add(questionlist.get(entry.getKey()));
             } else {
                 int id = questionlist.get(entry.getKey()).getId();
                 wrongStr.append(id).append(",");
             }
         }
-        double t = rewindingMap.size();
-//        double s = (k / t) * 100;
-        int s = 0;
-        if (tp != null) {
-            s = (int) (k * tp.getSingleScore());
-        }
-        Log.d("Score", s + "");
-        sendData(s, wrongStr.toString());
+        sendData(k);
     }
 
     public void jumpToNext() {
@@ -251,14 +217,13 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
         viewpager.setCurrentItem(position - 1);
     }
 
-    private void sendData(final int score, String wrongId) {
+    private void sendData(final int score) {
         Calendar calendar = Calendar.getInstance();
         endTime = calendar.getTimeInMillis();
         long duration = endTime - startTime;
         Log.d("Duration Time", Util.getStandardTime(duration));
         ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
-        Call<String> call1 = apiService.pushShiJuan(duration, testPaper.getId(),
-                "", score, UserSPUtil.getInstance(this).getInt(Contents.KEY_USER_ID), wrongId);
+        Call<String> call1 = apiService.pushCt(UserSPUtil.getInstance(this).getInt(Contents.KEY_USER_ID), rightAnswers);
         call1.enqueue(new Callback<String>() {
             @SuppressLint("WrongConstant")
             @Override
@@ -269,7 +234,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
                 if (object != null) {
                     int code = object.getCode();
                     if (code == 200) {
-                        ResultActivity.start(ExaminationCardActivity.this, score);
+                        ResultActivity.start(ExaminationCardActivity2.this, score);
                         finish();
                     }
                 }
@@ -281,75 +246,6 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
             }
         });
     }
-
-//    private void getData(int id) {
-//        ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
-//        Call<String> call1 = apiService.getTm(id, "");
-//        call1.enqueue(new Callback<String>() {
-//            @SuppressLint("WrongConstant")
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                String json = response.body();
-//                Gson gson = new Gson();
-//                QuestionBeanResponse object = gson.fromJson(json, QuestionBeanResponse.class);
-//                if (object != null) {
-//                    ArrayList<QuestionBean> list = object.getData();
-//                    if (list != null) {
-//                        questionlist.addAll(list);
-//                    }
-//                }
-//
-//                pager.setText("1/" + questionlist.size());
-//                viewpager.setCurrentItem(0);
-//                pagerAdapter = new ItemAdapter(getSupportFragmentManager(), ExaminationCardActivity.this, questionlist);
-//                viewpager.setAdapter(pagerAdapter);
-//                viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//
-//                    @RequiresApi(api = Build.VERSION_CODES.M)
-//                    @Override
-//                    public void onPageSelected(int p) {
-//                        int i = p + 1;
-//                        currentIndex = i;
-//                        pager.setText(i + "/" + questionlist.size());
-//                        if (i == questionlist.size()) {
-//                            pre.setClickable(true);
-//                            rlPre.setBackgroundColor(getColor(R.color.withe));
-//                            pre.setTextColor(getColor(R.color.black));
-//                            pre.setText("上一题");
-//                            next.setText("提交");
-//                        } else if (i == 1) {
-//                            pre.setClickable(false);
-//                            rlPre.setBackgroundColor(getColor(R.color.gray1));
-//                            pre.setTextColor(getColor(R.color.gray));
-//                            pre.setText("上一题");
-//                            next.setText("下一题");
-//                        } else {
-//                            pre.setClickable(true);
-//                            rlPre.setBackgroundColor(getColor(R.color.withe));
-//                            pre.setTextColor(getColor(R.color.black));
-//                            pre.setText("上一题");
-//                            next.setText("下一题");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onPageScrolled(int arg0, float arg1, int arg2) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onPageScrollStateChanged(int position) {
-////                        currentIndex = position;
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//            }
-//        });
-//
-//    }
 
     private void getTestPager(int type) {
         ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
@@ -363,17 +259,9 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
                 TestPaperResponse2 object = gson.fromJson(json, TestPaperResponse2.class);
                 if (object != null) {
                     if (object.getData() != null) {
-                        testPaper = object.getData();
-                        if(testPaper!=null){
-                            sjTitle.setText(testPaper.getTitle());
-                            if(testPaper.isAllowSubmission()){
-                                tj.setVisibility(View.VISIBLE);
-                                tj.setClickable(true);
-                            }else {
-                                tj.setVisibility(View.INVISIBLE);
-                                tj.setClickable(false);
-                            }
-                        }
+//                        testPaper = object.getData();
+//                        sjTitle.setText(testPaper.getTitle());
+//                        title.setText(testPaper.getExaminationPaperCategory());
 //                        getData(testPaper.getId());
                     }
                 }
@@ -385,31 +273,26 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
         });
     }
 
-    private void getTM(int type) {
+    private void getTM() {
         ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
-        Call<String> call1 = apiService.getTm2(type, UserSPUtil.getInstance(this).getInt(Contents.KEY_USER_ID));
+        Call<String> call1 = apiService.getTm3(UserSPUtil.getInstance(this).getInt(Contents.KEY_USER_ID));
         call1.enqueue(new Callback<String>() {
             @SuppressLint("WrongConstant")
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String json = response.body();
                 Gson gson = new Gson();
-                QuestionBeanResponse2 object = gson.fromJson(json, QuestionBeanResponse2.class);
-
+                QuestionBeanResponse3 object = gson.fromJson(json, QuestionBeanResponse3.class);
+                ArrayList<QuestionBean> list=new ArrayList<>();
                 if (object != null) {
-                    tp = object.getData();
-                    if (tp != null) {
-                        ArrayList<QuestionBean> list = tp.getQuestionBankList();
-                        if (list != null) {
-                            questionlist.addAll(list);
-                        }
-                    } else {
-                        return;
+                    list = object.getData();
+                    if (list != null) {
+                        questionlist.addAll(list);
                     }
                 }
                 pager.setText("1/" + questionlist.size());
                 viewpager.setCurrentItem(0);
-                pagerAdapter = new ItemAdapter(getSupportFragmentManager(), ExaminationCardActivity.this, tp);
+                pagerAdapter = new ItemAdapter2(getSupportFragmentManager(), ExaminationCardActivity2.this,list);
                 viewpager.setAdapter(pagerAdapter);
                 viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -474,7 +357,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
 
                 @Override
                 public void onFinish() {
-                    if (!ExaminationCardActivity.this.isFinishing()) {
+                    if (!ExaminationCardActivity2.this.isFinishing()) {
                         finish();
                     }
                 }
@@ -489,7 +372,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_bottom_dialog);
         RecyclerView recyclerView = dialog.findViewById(R.id.recyclerview);
-        AnswerAdapter answerAdapter = new AnswerAdapter(context,answerMap,size);
+        AnswerAdapter answerAdapter = new AnswerAdapter(context, answerMap,size);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.addItemDecoration(new SpaceItemDecoration(10));
         recyclerView.setAdapter(answerAdapter);
@@ -521,7 +404,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Util.showLogoutDialog(ExaminationCardActivity.this);
+            Util.showLogoutDialog(ExaminationCardActivity2.this);
         }
         return true;
     }

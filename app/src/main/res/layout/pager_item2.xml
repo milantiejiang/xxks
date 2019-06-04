@@ -1,0 +1,79 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/withe"
+            android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@+id/pager_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/withe"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/subject_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+            <RelativeLayout
+                android:id="@+id/rl_description"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.mltj.xxks.widget.RichEditor
+                    android:id="@+id/editor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+
+            <com.mltj.xxks.widget.NoScrollListview
+                android:id="@+id/lv_options"
+                style="?android:attr/listViewWhiteStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:divider="@null"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_dtjx"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/withe"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/dtjx"
+                android:layout_margin="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="答题解析>>"
+                android:textSize="20sp"
+                android:textColor="@color/Green"/>
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/answer"
+                android:text="答案"
+                android:layout_margin="16dp"
+                android:textColor="@color/Green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
