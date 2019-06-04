@@ -87,7 +87,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
     public static int currentIndex = 0;
     private CountDownTimer mTimer;
     Dialog dialog;
-    TestPaper testPaper;
+    TestPaper testPaper=null;
     long startTime;
     long endTime;
     QuestionBeanResponse2.TestPaper tp = null;
@@ -120,11 +120,13 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
             title.setText(testPaper.getExaminationPaperCategory());
 //            getData(testPaper.getId());
             getTM(testPaper.getId());
+        }else {
+            if (testPagerType != -1) {
+                getTestPager(testPagerType);
+                getTM(testPagerType);
+            }
         }
-        if (testPagerType != -1) {
-            getTestPager(testPagerType);
-            getTM(testPagerType);
-        }
+
         EventBus.getDefault().register(this);
         startCounter();
     }

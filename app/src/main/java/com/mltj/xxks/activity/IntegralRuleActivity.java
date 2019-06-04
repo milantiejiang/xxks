@@ -274,7 +274,7 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
         return (int) (count*100);
     }
 
-    @OnClick({R.id.back, R.id.go_kszt, R.id.go_login, R.id.go_mryl, R.id.go_mzyk, R.id.jfmx})
+    @OnClick({R.id.back, R.id.go_kszt, R.id.go_login, R.id.go_mryl, R.id.go_mzyk, R.id.jfmx,R.id.go_ydxxsc})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -283,6 +283,9 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
                 ExaminationCardActivity.start(this, 17);
                 break;
             case R.id.go_login:
+                break;
+            case R.id.go_mryl:
+                ExaminationCardActivity.start(this,14);
                 break;
             case R.id.go_mzyk:
                 ExaminationCardActivity.start(this, 15);

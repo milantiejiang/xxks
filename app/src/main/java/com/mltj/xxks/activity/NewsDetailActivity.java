@@ -70,7 +70,7 @@ public class NewsDetailActivity extends BasiceActivity implements View.OnClickLi
 //                    .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT)
 //                    .into(tvContent);
             if(news.getLinkUrl().equals("")){
-                news.setLinkUrl("https://baijiahao.baidu.com/s?id=1631497470428912049&wfr=spider&for=pc");
+                news.setLinkUrl("http://www.xinhuanet.com/world/2019-06/03/c_1124579007.htm");
             }
             WebSettings webSettings = webview.getSettings();
             webSettings.setJavaScriptEnabled(true);
