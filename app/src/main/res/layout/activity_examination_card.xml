@@ -134,6 +134,10 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/pre"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp"
                     android:text="上一题"
                     android:textSize="18sp"
                     android:textColor="@color/gray"
@@ -149,6 +153,10 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/next"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp"
                     android:text="下一题"
                     android:textSize="18sp"
                     android:textColor="@color/withe"

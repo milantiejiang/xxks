@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.mltj.xxks.R;
 import com.mltj.xxks.adapter.AnswerAdapter;
 import com.mltj.xxks.adapter.ItemAdapter2;
+import com.mltj.xxks.bean.Ans;
 import com.mltj.xxks.bean.Answer;
 import com.mltj.xxks.bean.BasicResponse;
 import com.mltj.xxks.bean.DateCategory;
@@ -63,6 +64,7 @@ public class ExaminationCardActivity2 extends BasiceActivity implements View.OnC
     public ArrayList<QuestionBean> rightAnswers=new ArrayList<>();
     public HashMap<Integer, Answer> answerMap = new HashMap<>();
     public HashMap<Integer, Boolean> rewindingMap = new HashMap<>();
+    public HashMap<Integer, Ans> wrongAnsers=new HashMap<>();
 
     @BindView(R.id.sj_coutdown)
     TextView sjCountdown;
@@ -150,10 +152,21 @@ public class ExaminationCardActivity2 extends BasiceActivity implements View.OnC
             Answer answer = answerMap.get(i);
             if (answer != null) {
                 if (answer.getAnswers() != null) {
-                    rewindingMap.put(i, matcheAns(ans, answer.getAnswers()));
+                    boolean f=matcheAns(ans, answer.getAnswers());
+                    rewindingMap.put(i, f);
+                    if(!f){
+                        Ans as=new Ans();
+                        as.setMyAns(answer.getAnswers());
+                        as.setRightAns(ans);
+                        wrongAnsers.put(i,as);
+                    }
                 }
             } else {
                 rewindingMap.put(i, false);
+                Ans as=new Ans();
+                as.setMyAns(new ArrayList<String>());
+                as.setRightAns(ans);
+                wrongAnsers.put(i,as);
             }
         }
         rewind();
@@ -204,7 +217,15 @@ public class ExaminationCardActivity2 extends BasiceActivity implements View.OnC
                 wrongStr.append(id).append(",");
             }
         }
-        sendData(k);
+
+        int s = 0;
+        if (rightAnswers != null) {
+            for(int i=0;i<rightAnswers.size();i++){
+                s += rightAnswers.get(i).getSingleScore();
+            }
+        }
+        Log.d("Score", s + "");
+        sendData(s);
     }
 
     public void jumpToNext() {
@@ -234,7 +255,7 @@ public class ExaminationCardActivity2 extends BasiceActivity implements View.OnC
                 if (object != null) {
                     int code = object.getCode();
                     if (code == 200) {
-                        ResultActivity.start(ExaminationCardActivity2.this, score);
+                        ResultActivity.start(ExaminationCardActivity2.this, score,wrongAnsers);
                         finish();
                     }
                 }
