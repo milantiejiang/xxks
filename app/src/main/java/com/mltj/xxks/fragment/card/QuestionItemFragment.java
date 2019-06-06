@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,30 +23,27 @@ import com.mltj.xxks.R;
 import com.mltj.xxks.activity.ExaminationCardActivity;
 import com.mltj.xxks.adapter.OptionsListAdapter;
 import com.mltj.xxks.bean.Answer;
-import com.mltj.xxks.bean.MessageEvent;
 import com.mltj.xxks.bean.QuestionBean;
 import com.mltj.xxks.bean.QuestionOptionBean;
 import com.mltj.xxks.util.Diff_match_patch;
 import com.mltj.xxks.widget.NoScrollListview;
 import com.mltj.xxks.widget.RichEditor;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressLint("ValidFragment")
 public class QuestionItemFragment extends Fragment {
     QuestionBean questionBean;
-    int index;
+    int index = 0;
     private OptionsListAdapter adapter;
     private StringBuffer sb;
     private NoScrollListview lv;
     private Context context;
     private boolean isShowAnswer = false;
-    String mText = "";
-    String mQcontent = "";
+//    String mText = "";
+//    String mQcontent = "";
 
     @SuppressLint("ValidFragment")
     public QuestionItemFragment(Context context, int index, QuestionBean bean, boolean isShowAnswer) {
@@ -53,7 +51,7 @@ public class QuestionItemFragment extends Fragment {
         this.index = index;
         questionBean = bean;
         this.isShowAnswer = isShowAnswer;
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -80,6 +78,7 @@ public class QuestionItemFragment extends Fragment {
             lldtjx.setVisibility(View.GONE);
         }
         Answer answer = ((ExaminationCardActivity) context).getAnswerMap().get(index);
+
         if (answer != null) {
             initedit(getActivity(), editor, answer.getQuestion(), questionBean.getQuestionContent());
         } else {
@@ -230,14 +229,25 @@ public class QuestionItemFragment extends Fragment {
             @Override
             public void onTextChange(String text) {
 //                mText = text;
+                ArrayList<String> strs = new ArrayList<>();
+                //避免只传递引用给对象
+                strs.addAll(getAnsOption(text, qcontent));
+                Log.e("RichEditor", index + ":" + strs);
                 Answer answer = new Answer();
                 answer.setPosition(index);
                 answer.setQuestion(text);
                 answer.setType(3);
-                answer.setAnswers(getAnsOption(text,qcontent));
-                ((ExaminationCardActivity)context).getAnswerMap().put(index, answer);
+                answer.setAnswers(strs);
+                HashMap<Integer, Answer> map = ((ExaminationCardActivity) context).getAnswerMap();
+                map.put(index, answer);
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
     }
 
     private ArrayList<String> getAnsOption(long[] select, ArrayList<QuestionOptionBean> options) {
@@ -261,28 +271,39 @@ public class QuestionItemFragment extends Fragment {
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(MessageEvent messageEvent) {
-        String message = messageEvent.getMessage();
-        if (message.equals("next_tm")) {
-            int questionType = Integer.valueOf(questionBean.getQuestionType());
-            if (questionType == 2) {
-                Answer answer = new Answer();
-                answer.setPosition(index);
-                answer.setQuestion(mText);
-                ArrayList<String> as=getAnsOption(mText,mQcontent);
-                answer.setAnswers(as);
-                ((ExaminationCardActivity) context).getAnswerMap().put(index, answer);
-            }
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void Event(MessageEvent messageEvent) {
+//        String message = messageEvent.getMessage();
+//        if (message.equals("next_tm")) {
+//            int questionType = Integer.valueOf(questionBean.getQuestionType());
+//            if (questionType == 2) {
+//                Answer answer = new Answer();
+//                answer.setPosition(index);
+//                answer.setQuestion(mText);
+//                ArrayList<String> as = getAnsOption(mText, mQcontent);
+//                answer.setAnswers(as);
+//                ((ExaminationCardActivity) context).getAnswerMap().put(index, answer);
+//            }
+//        }
+//    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+//        if (EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().unregister(this);
+//        }
+    }
+
+    public static void main(String[] args) {
+        Map<Integer, Object> map = new HashMap<>();
+
+        map.put(0, "Java编程技术乐园");
+
+        map.put(1, "生活在长沙的延安人");
+        map.put(1, "ss");
+
+        System.out.println(map.toString());
     }
 
 }

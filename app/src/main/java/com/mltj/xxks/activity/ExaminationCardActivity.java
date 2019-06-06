@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.mltj.xxks.R;
 import com.mltj.xxks.adapter.AnswerAdapter;
 import com.mltj.xxks.adapter.ItemAdapter;
+import com.mltj.xxks.bean.Ans;
 import com.mltj.xxks.bean.Answer;
 import com.mltj.xxks.bean.BasicResponse;
 import com.mltj.xxks.bean.DateCategory;
@@ -62,6 +63,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
     public ArrayList<QuestionBean> questionlist = new ArrayList<QuestionBean>();
     public HashMap<Integer, Answer> answerMap = new HashMap<>();
     public HashMap<Integer, Boolean> rewindingMap = new HashMap<>();
+    public HashMap<Integer, Ans> wrongAnsers=new HashMap<>();
 
     @BindView(R.id.sj_coutdown)
     TextView sjCountdown;
@@ -159,6 +161,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
                 jumpToPre();
                 break;
             case R.id.back:
+                calculation();
                 Util.showLogoutDialog(ExaminationCardActivity.this);
                 break;
             case R.id.close:
@@ -178,10 +181,22 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
             Answer answer = answerMap.get(i);
             if (answer != null) {
                 if (answer.getAnswers() != null) {
-                    rewindingMap.put(i, matcheAns(ans, answer.getAnswers()));
+//                    rewindingMap.put(i, matcheAns(ans, answer.getAnswers()));
+                    boolean f=matcheAns(ans, answer.getAnswers());
+                    rewindingMap.put(i, f);
+                    if(!f){
+                        Ans as=new Ans();
+                        as.setMyAns(answer.getAnswers());
+                        as.setRightAns(ans);
+                        wrongAnsers.put(i,as);
+                    }
                 }
             } else {
                 rewindingMap.put(i, false);
+                Ans as=new Ans();
+                as.setMyAns(new ArrayList<String>());
+                as.setRightAns(ans);
+                wrongAnsers.put(i,as);
             }
         }
         rewind();
@@ -218,7 +233,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
             return;
         }
         for (Map.Entry<Integer, Answer> entry : answerMap.entrySet()) {
-            Log.d("MyAnswer", entry.getKey() + ":" + entry.getValue().getAnswers().toString());
+            Log.d("MyAnswer", entry.getValue().getPosition() + ":" + entry.getValue().getAnswers().toString());
         }
         double k = 0;
         StringBuffer wrongStr = new StringBuffer();
@@ -269,7 +284,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
                 if (object != null) {
                     int code = object.getCode();
                     if (code == 200) {
-                        ResultActivity.start(ExaminationCardActivity.this, score);
+                        ResultActivity.start(ExaminationCardActivity.this, score,wrongAnsers);
                         finish();
                     }
                 }
@@ -281,75 +296,6 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
             }
         });
     }
-
-//    private void getData(int id) {
-//        ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
-//        Call<String> call1 = apiService.getTm(id, "");
-//        call1.enqueue(new Callback<String>() {
-//            @SuppressLint("WrongConstant")
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                String json = response.body();
-//                Gson gson = new Gson();
-//                QuestionBeanResponse object = gson.fromJson(json, QuestionBeanResponse.class);
-//                if (object != null) {
-//                    ArrayList<QuestionBean> list = object.getData();
-//                    if (list != null) {
-//                        questionlist.addAll(list);
-//                    }
-//                }
-//
-//                pager.setText("1/" + questionlist.size());
-//                viewpager.setCurrentItem(0);
-//                pagerAdapter = new ItemAdapter(getSupportFragmentManager(), ExaminationCardActivity.this, questionlist);
-//                viewpager.setAdapter(pagerAdapter);
-//                viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//
-//                    @RequiresApi(api = Build.VERSION_CODES.M)
-//                    @Override
-//                    public void onPageSelected(int p) {
-//                        int i = p + 1;
-//                        currentIndex = i;
-//                        pager.setText(i + "/" + questionlist.size());
-//                        if (i == questionlist.size()) {
-//                            pre.setClickable(true);
-//                            rlPre.setBackgroundColor(getColor(R.color.withe));
-//                            pre.setTextColor(getColor(R.color.black));
-//                            pre.setText("上一题");
-//                            next.setText("提交");
-//                        } else if (i == 1) {
-//                            pre.setClickable(false);
-//                            rlPre.setBackgroundColor(getColor(R.color.gray1));
-//                            pre.setTextColor(getColor(R.color.gray));
-//                            pre.setText("上一题");
-//                            next.setText("下一题");
-//                        } else {
-//                            pre.setClickable(true);
-//                            rlPre.setBackgroundColor(getColor(R.color.withe));
-//                            pre.setTextColor(getColor(R.color.black));
-//                            pre.setText("上一题");
-//                            next.setText("下一题");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onPageScrolled(int arg0, float arg1, int arg2) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onPageScrollStateChanged(int position) {
-////                        currentIndex = position;
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//            }
-//        });
-//
-//    }
 
     private void getTestPager(int type) {
         ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
@@ -451,6 +397,7 @@ public class ExaminationCardActivity extends BasiceActivity implements View.OnCl
                     @Override
                     public void onPageScrollStateChanged(int position) {
 //                        currentIndex = position;
+
                     }
                 });
             }

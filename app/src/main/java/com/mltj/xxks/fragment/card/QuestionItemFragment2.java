@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @SuppressLint("ValidFragment")
 public class QuestionItemFragment2 extends Fragment {
@@ -227,12 +229,17 @@ public class QuestionItemFragment2 extends Fragment {
             @Override
             public void onTextChange(String text) {
 //                mText = text;
+                ArrayList<String> strs = new ArrayList<>();
+                //避免只传递引用给对象
+                strs.addAll(getAnsOption(text, qcontent));
+                Log.e("RichEditor", index + ":" + strs);
                 Answer answer = new Answer();
                 answer.setPosition(index);
                 answer.setQuestion(text);
                 answer.setType(3);
-                answer.setAnswers(getAnsOption(text,qcontent));
-                ((ExaminationCardActivity2)context).getAnswerMap().put(index, answer);
+                answer.setAnswers(strs);
+                HashMap<Integer, Answer> map = ((ExaminationCardActivity2) context).getAnswerMap();
+                map.put(index, answer);
             }
         });
     }

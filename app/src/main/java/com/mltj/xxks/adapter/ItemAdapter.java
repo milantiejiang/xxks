@@ -40,7 +40,4 @@ public class ItemAdapter extends FragmentStatePagerAdapter {
 		}
 		return 0;
 	}
-  
-
-
 }
