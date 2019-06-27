@@ -3,7 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/withe"
+              android:background="@color/Orange"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -35,6 +35,7 @@
             android:background="@color/gray"/>
     </RelativeLayout>
     <RelativeLayout
+        android:visibility="gone"
         android:background="@color/withe"
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -51,6 +52,17 @@
             android:background="@color/gray"
             android:layout_width="match_parent"
             android:layout_height="0.1dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_margin="16dp"
+        android:background="@drawable/card_white_bg"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <View
+            android:background="@color/gray"
+            android:layout_centerInParent="true"
+            android:layout_width="1dp"
+            android:layout_height="80dp"/>
     </RelativeLayout>
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"

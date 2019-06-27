@@ -158,7 +158,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@mipmap/ic_jfgz"/>
+                        android:src="@mipmap/ic_xxjf"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -180,7 +180,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@mipmap/ic_mryl"/>
+                        android:src="@mipmap/ic_zndt"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -203,7 +203,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@mipmap/ic_mzyk"/>
+                        android:src="@mipmap/ic_mzyd"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -226,7 +226,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_kaoshi"/>
+                        android:src="@mipmap/ic_ztks"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -255,7 +255,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_cuoti"/>
+                        android:src="@mipmap/ic_ctk"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -277,7 +277,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_paihang"/>
+                        android:src="@mipmap/ic_xxbb"/>
 
                     <TextView
                         android:layout_width="wrap_content"

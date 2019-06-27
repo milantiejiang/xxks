@@ -26,6 +26,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"/>
+
         <TextView
             android:id="@+id/jfmx"
             android:layout_width="wrap_content"
@@ -48,482 +49,605 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
             <RelativeLayout
-                android:orientation="vertical"
-                android:background="@color/withe"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="200dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="@drawable/ic_jfbg"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:padding="10dp"
                     android:text="您的积分"
+                    android:textColor="@color/withe"
                     android:textSize="20sp"
-                    android:textColor="@color/yellow"
                     android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:visibility="gone"/>
+
                 <TextView
                     android:id="@+id/score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
                     android:padding="10dp"
                     android:text="0"
-                    android:textSize="20sp"
-                    android:textColor="@color/yellow"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/withe"
+                    android:textSize="50sp"/>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ellipse_white_bg">
+
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_jf"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/icon"
+                        android:gravity="center"
+                        android:text="积分试行期间，积分规则将会适时调整，带来不便敬请谅解"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"/>
+                </RelativeLayout>
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginTop="20dp"
-                android:background="@color/withe"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_marginTop="0dp"
+                android:background="@color/withe">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/red"/>
+
                 <TextView
-                    android:padding="10dp"
-                    android:id="@+id/login"
-                    android:text="登录"
-                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="12dp"
+                    android:text="积分规则"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="今日已累积"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:id="@+id/today_jf"
+                        android:text="0"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="积分"
+                        android:textColor="@color/red"/>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="0dp"
+                android:background="@color/withe">
+
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@id/login"
-                    android:id="@+id/login_score_ts"
-                    android:text="sss"
+                    android:id="@+id/login"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ProgressBar
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="登录"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/login_score_ts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/login"
                     android:layout_marginLeft="10dp"
-                    android:layout_below="@id/login_score_ts"
+                    android:text="sss"/>
+
+                <ProgressBar
                     android:id="@+id/progress_login"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/login_score_ts"
+                    android:layout_marginLeft="10dp"
                     android:max="100"
                     android:progress="50"
                     />
+
                 <TextView
+                    android:id="@+id/login_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/login_score_ts"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/progress_login"
-                    android:layout_below="@id/login_score_ts"
-                    android:id="@+id/login_score"
-                    android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:text=""/>
+
                 <TextView
 
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:id="@+id/go_login"
-                    android:text=" 已完成 "
-                    android:background="@drawable/ellipse_gray_bg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ellipse_gray_bg"
+                    android:text=" 已完成 "/>
+
                 <View
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/gray"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"/>
+                    android:layout_height="0.1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray"/>
             </RelativeLayout>
+
             <RelativeLayout
-                android:background="@color/withe"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:background="@color/withe">
+
                 <TextView
-                    android:padding="10dp"
                     android:id="@+id/mryl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:text="智能答题"
-                    android:textSize="20sp"
+
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="20sp"/>
+
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@id/mryl"
                     android:id="@+id/mryl_score_ts"
-                    android:text=""
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ProgressBar
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mryl"
                     android:layout_marginLeft="10dp"
-                    android:layout_below="@id/mryl_score_ts"
+                    android:text=""/>
+
+                <ProgressBar
                     android:id="@+id/progress_mryl"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/mryl_score_ts"
+                    android:layout_marginLeft="10dp"
                     android:max="100"
                     android:progress="10"
                     />
+
                 <TextView
+                    android:id="@+id/mryl_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mryl_score_ts"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/progress_mryl"
-                    android:layout_below="@id/mryl_score_ts"
-                    android:id="@+id/mryl_score"
-                    android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:text=""/>
+
                 <TextView
 
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:id="@+id/go_mryl"
-                    android:text="去答题>>"
-                    android:background="@drawable/ellipse_gray_bg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ellipse_gray_bg"
+                    android:text="去答题>>"/>
+
                 <View
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/gray"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"/>
+                    android:layout_height="0.1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray"/>
             </RelativeLayout>
+
             <RelativeLayout
-                android:background="@color/withe"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:background="@color/withe">
+
                 <TextView
-                    android:padding="10dp"
                     android:id="@+id/mzyk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:text="每周一答"
-                    android:textSize="20sp"
+
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="20sp"/>
+
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@id/mzyk"
                     android:id="@+id/mzyk_score_ts"
-                    android:text=""
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ProgressBar
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mzyk"
                     android:layout_marginLeft="10dp"
-                    android:layout_below="@id/mzyk_score_ts"
+                    android:text=""/>
+
+                <ProgressBar
                     android:id="@+id/progress_mzyk"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/mzyk_score_ts"
+                    android:layout_marginLeft="10dp"
                     android:max="100"
                     android:progress="50"
                     />
+
                 <TextView
+                    android:id="@+id/mzyk_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mzyk_score_ts"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/progress_mzyk"
-                    android:layout_below="@id/mzyk_score_ts"
-                    android:id="@+id/mzyk_score"
-                    android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:text=""/>
+
                 <TextView
 
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:id="@+id/go_mzyk"
-                    android:text="去答题>>"
-                    android:background="@drawable/ellipse_gray_bg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ellipse_gray_bg"
+                    android:text="去答题>>"/>
+
                 <View
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/gray"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"/>
+                    android:layout_height="0.1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray"/>
             </RelativeLayout>
+
             <RelativeLayout
-                android:background="@color/withe"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:background="@color/withe">
+
                 <TextView
-                    android:padding="10dp"
                     android:id="@+id/kszt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:text="专题考试"
-                    android:textSize="20sp"
+
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="20sp"/>
+
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@id/kszt"
                     android:id="@+id/kszt_score_ts"
-                    android:text=""
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ProgressBar
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/kszt"
                     android:layout_marginLeft="10dp"
-                    android:layout_below="@id/kszt_score_ts"
+                    android:text=""/>
+
+                <ProgressBar
                     android:id="@+id/progress_kszt"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/kszt_score_ts"
+                    android:layout_marginLeft="10dp"
                     android:max="100"
                     android:progress="15"
                     />
+
                 <TextView
+                    android:id="@+id/kszt_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/kszt_score_ts"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/progress_kszt"
-                    android:layout_below="@id/kszt_score_ts"
-                    android:id="@+id/kszt_score"
-                    android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:text=""/>
+
                 <TextView
 
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:id="@+id/go_kszt"
-                    android:text="去答题>>"
-                    android:background="@drawable/ellipse_gray_bg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ellipse_gray_bg"
+                    android:text="去答题>>"/>
+
                 <View
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/gray"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"/>
+                    android:layout_height="0.1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray"/>
             </RelativeLayout>
+
             <RelativeLayout
-                android:background="@color/withe"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:background="@color/withe">
+
                 <TextView
-                    android:padding="10dp"
                     android:id="@+id/ydxxsc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:text="阅读学习时长"
-                    android:textSize="20sp"
+
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="20sp"/>
+
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@id/ydxxsc"
                     android:id="@+id/ydxxsc_score_ts"
-                    android:text=""
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ProgressBar
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ydxxsc"
                     android:layout_marginLeft="10dp"
-                    android:layout_below="@id/ydxxsc_score_ts"
+                    android:text=""/>
+
+                <ProgressBar
                     android:id="@+id/progress_ydxxsc"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/ydxxsc_score_ts"
+                    android:layout_marginLeft="10dp"
                     android:max="100"
                     android:progress="35"
                     />
+
                 <TextView
+                    android:id="@+id/ydxxsc_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ydxxsc_score_ts"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/progress_ydxxsc"
-                    android:layout_below="@id/ydxxsc_score_ts"
-                    android:id="@+id/ydxxsc_score"
-                    android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:text=""/>
+
                 <TextView
 
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:id="@+id/go_ydxxsc"
-                    android:text="去看看>>"
-                    android:background="@drawable/ellipse_gray_bg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ellipse_gray_bg"
+                    android:text="去看看>>"/>
+
                 <View
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/gray"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"/>
+                    android:layout_height="0.1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray"/>
             </RelativeLayout>
             <!--<RelativeLayout-->
-                <!--android:visibility="gone"-->
-                <!--android:background="@color/withe"-->
-                <!--android:layout_marginLeft="16dp"-->
-                <!--android:layout_marginRight="16dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="100dp">-->
-                <!--<TextView-->
-                    <!--android:padding="10dp"-->
-                    <!--android:id="@+id/gkspsc"-->
-                    <!--android:text="观看视频时长"-->
-                    <!--android:textSize="20sp"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<TextView-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_below="@id/gkspsc"-->
-                    <!--android:id="@+id/gkspsc_score_ts"-->
-                    <!--android:text=""-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<ProgressBar-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_below="@id/gkspsc_score_ts"-->
-                    <!--android:id="@+id/progress_gkspsc"-->
-                    <!--style="?android:attr/progressBarStyleHorizontal"-->
-                    <!--android:layout_width="85dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:max="100"-->
-                    <!--android:progress="20"-->
-                    <!--/>-->
-                <!--<TextView-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_toRightOf="@id/progress_gkspsc"-->
-                    <!--android:layout_below="@id/gkspsc_score_ts"-->
-                    <!--android:id="@+id/gkspsc_score"-->
-                    <!--android:text=""-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<TextView-->
-                    <!--android:padding="10dp"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:id="@+id/go_gkspsc"-->
-                    <!--android:text="去看看>>"-->
-                    <!--android:background="@drawable/ellipse_gray_bg"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<View-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@color/gray"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="0.1dp"/>-->
+            <!--android:visibility="gone"-->
+            <!--android:background="@color/withe"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="100dp">-->
+            <!--<TextView-->
+            <!--android:padding="10dp"-->
+            <!--android:id="@+id/gkspsc"-->
+            <!--android:text="观看视频时长"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<TextView-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_below="@id/gkspsc"-->
+            <!--android:id="@+id/gkspsc_score_ts"-->
+            <!--android:text=""-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<ProgressBar-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_below="@id/gkspsc_score_ts"-->
+            <!--android:id="@+id/progress_gkspsc"-->
+            <!--style="?android:attr/progressBarStyleHorizontal"-->
+            <!--android:layout_width="85dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:max="100"-->
+            <!--android:progress="20"-->
+            <!--/>-->
+            <!--<TextView-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_toRightOf="@id/progress_gkspsc"-->
+            <!--android:layout_below="@id/gkspsc_score_ts"-->
+            <!--android:id="@+id/gkspsc_score"-->
+            <!--android:text=""-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<TextView-->
+            <!--android:padding="10dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:id="@+id/go_gkspsc"-->
+            <!--android:text="去看看>>"-->
+            <!--android:background="@drawable/ellipse_gray_bg"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<View-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/gray"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.1dp"/>-->
             <!--</RelativeLayout>-->
             <!--<RelativeLayout-->
-                <!--android:visibility="gone"-->
-                <!--android:background="@color/withe"-->
-                <!--android:layout_marginLeft="16dp"-->
-                <!--android:layout_marginRight="16dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="100dp">-->
-                <!--<TextView-->
-                    <!--android:padding="10dp"-->
-                    <!--android:id="@+id/ydxx"-->
-                    <!--android:text="阅读学习"-->
-                    <!--android:textSize="20sp"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<TextView-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_below="@id/ydxx"-->
-                    <!--android:id="@+id/ydxx_score_ts"-->
-                    <!--android:text=""-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<ProgressBar-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_below="@id/ydxx_score_ts"-->
-                    <!--android:id="@+id/progress_ydxx"-->
-                    <!--style="?android:attr/progressBarStyleHorizontal"-->
-                    <!--android:layout_width="85dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:max="100"-->
-                    <!--android:progress="40"-->
-                    <!--/>-->
-                <!--<TextView-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_toRightOf="@id/progress_ydxx"-->
-                    <!--android:layout_below="@id/ydxx_score_ts"-->
-                    <!--android:id="@+id/ydxx_score"-->
-                    <!--android:text=""-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<TextView-->
-                    <!--android:padding="10dp"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:id="@+id/go_ydxx"-->
-                    <!--android:text="去看看>>"-->
-                    <!--android:background="@drawable/ellipse_gray_bg"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<View-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@color/gray"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="0.1dp"/>-->
+            <!--android:visibility="gone"-->
+            <!--android:background="@color/withe"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="100dp">-->
+            <!--<TextView-->
+            <!--android:padding="10dp"-->
+            <!--android:id="@+id/ydxx"-->
+            <!--android:text="阅读学习"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<TextView-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_below="@id/ydxx"-->
+            <!--android:id="@+id/ydxx_score_ts"-->
+            <!--android:text=""-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<ProgressBar-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_below="@id/ydxx_score_ts"-->
+            <!--android:id="@+id/progress_ydxx"-->
+            <!--style="?android:attr/progressBarStyleHorizontal"-->
+            <!--android:layout_width="85dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:max="100"-->
+            <!--android:progress="40"-->
+            <!--/>-->
+            <!--<TextView-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_toRightOf="@id/progress_ydxx"-->
+            <!--android:layout_below="@id/ydxx_score_ts"-->
+            <!--android:id="@+id/ydxx_score"-->
+            <!--android:text=""-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<TextView-->
+            <!--android:padding="10dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:id="@+id/go_ydxx"-->
+            <!--android:text="去看看>>"-->
+            <!--android:background="@drawable/ellipse_gray_bg"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<View-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/gray"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.1dp"/>-->
             <!--</RelativeLayout>-->
             <!--<RelativeLayout-->
-                <!--android:visibility="gone"-->
-                <!--android:background="@color/withe"-->
-                <!--android:layout_marginLeft="16dp"-->
-                <!--android:layout_marginRight="16dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="100dp">-->
-                <!--<TextView-->
-                    <!--android:padding="10dp"-->
-                    <!--android:id="@+id/gksp"-->
-                    <!--android:text="观看视频"-->
-                    <!--android:textSize="20sp"-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<TextView-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_below="@id/gksp"-->
-                    <!--android:id="@+id/gksp_score_ts"-->
-                    <!--android:text=""-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<ProgressBar-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_below="@id/gksp_score_ts"-->
-                    <!--android:id="@+id/progress_gksp"-->
-                    <!--style="?android:attr/progressBarStyleHorizontal"-->
-                    <!--android:layout_width="85dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:max="100"-->
-                    <!--android:progress="10"-->
-                    <!--/>-->
-                <!--<TextView-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:layout_toRightOf="@id/progress_gksp"-->
-                    <!--android:layout_below="@id/gksp_score_ts"-->
-                    <!--android:id="@+id/gksp_score"-->
-                    <!--android:text=""-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<TextView-->
-                    <!--android:padding="10dp"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:id="@+id/go_gksp"-->
-                    <!--android:text="去看看>>"-->
-                    <!--android:background="@drawable/ellipse_gray_bg"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"/>-->
-                <!--<View-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@color/gray"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="0.1dp"/>-->
+            <!--android:visibility="gone"-->
+            <!--android:background="@color/withe"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="100dp">-->
+            <!--<TextView-->
+            <!--android:padding="10dp"-->
+            <!--android:id="@+id/gksp"-->
+            <!--android:text="观看视频"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<TextView-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_below="@id/gksp"-->
+            <!--android:id="@+id/gksp_score_ts"-->
+            <!--android:text=""-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<ProgressBar-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_below="@id/gksp_score_ts"-->
+            <!--android:id="@+id/progress_gksp"-->
+            <!--style="?android:attr/progressBarStyleHorizontal"-->
+            <!--android:layout_width="85dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:max="100"-->
+            <!--android:progress="10"-->
+            <!--/>-->
+            <!--<TextView-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_toRightOf="@id/progress_gksp"-->
+            <!--android:layout_below="@id/gksp_score_ts"-->
+            <!--android:id="@+id/gksp_score"-->
+            <!--android:text=""-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<TextView-->
+            <!--android:padding="10dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:id="@+id/go_gksp"-->
+            <!--android:text="去看看>>"-->
+            <!--android:background="@drawable/ellipse_gray_bg"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+            <!--<View-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/gray"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.1dp"/>-->
             <!--</RelativeLayout>-->
         </LinearLayout>
 
