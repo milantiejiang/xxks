@@ -3,7 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/Orange"
+              android:background="@drawable/orenger_bg"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -35,37 +35,84 @@
             android:background="@color/gray"/>
     </RelativeLayout>
     <RelativeLayout
-        android:visibility="gone"
-        android:background="@color/withe"
+        android:visibility="visible"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/selcet"
             android:text="请选择公司和部门>>"
-            android:textColor="@color/blue"
+            android:textColor="@color/withe"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <View
-            android:layout_alignParentBottom="true"
-            android:background="@color/gray"
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"/>
     </RelativeLayout>
     <RelativeLayout
-        android:layout_margin="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/card_white_bg"
         android:layout_width="match_parent"
         android:layout_height="100dp">
-        <View
-            android:background="@color/gray"
-            android:layout_centerInParent="true"
-            android:layout_width="1dp"
-            android:layout_height="80dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/line"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="您在全公司排名"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+                <View
+                    android:id="@+id/line"
+                    android:background="@color/gray"
+                    android:layout_centerInParent="true"
+                    android:layout_width="1dp"
+                    android:layout_height="80dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/line"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="您在部门排名"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
     </RelativeLayout>
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
+        android:visibility="gone"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         app:tabIndicatorColor="@color/red"
         app:tabSelectedTextColor="@color/red"
         app:tabMode="scrollable"
@@ -76,6 +123,11 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
+        android:background="@drawable/card_white_bg"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v4.view.ViewPager>

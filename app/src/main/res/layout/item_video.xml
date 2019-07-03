@@ -19,8 +19,7 @@
             android:maxLines="2"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/date"

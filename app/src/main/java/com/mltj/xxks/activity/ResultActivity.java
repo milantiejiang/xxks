@@ -44,7 +44,7 @@ public class ResultActivity extends BasiceActivity implements View.OnClickListen
 
     @Override
     protected void init() {
-        score.setText(getIntent().getIntExtra("score",0)+"分");
+        score.setText(getIntent().getIntExtra("score",0)+"");
         if(getIntent().getExtras()!=null){
             HashMap<Integer,Ans> map= (HashMap<Integer, Ans>) getIntent().getExtras().get("wrongans");
             if(map!=null){
@@ -54,7 +54,7 @@ public class ResultActivity extends BasiceActivity implements View.OnClickListen
                             .append("  您的答案：").append(entry.getValue().getMyAns()).append("\n")
                             .append("  正确答案：").append(entry.getValue().getRightAns()).append("\n");
                 }
-                wrong.setText("您答错的题：\n"+str);
+                wrong.setText(str);
                 wrong.setMovementMethod(ScrollingMovementMethod.getInstance());
             }
         }

@@ -38,9 +38,13 @@ public class Ranking2Adapter extends RecyclerView.Adapter<Ranking2Adapter.ViewHo
         final Ranking2 ranking=data.get(position);
         if(position==0){
             viewHolder.name.setTextColor(context.getColor(R.color.yellow));
+            viewHolder.p.setTextColor(context.getColor(R.color.yellow));
         }else {
             viewHolder.name.setTextColor(context.getColor(R.color.black));
+            viewHolder.p.setTextColor(context.getColor(R.color.black));
         }
+        viewHolder.p.setText(position+1+"");
+        viewHolder.xin.setText(ranking.getName().subSequence(0,1));
         viewHolder.name.setText(ranking.getName());
         viewHolder.duration.setText(ranking.getScore()+"分");
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -73,13 +77,21 @@ public class Ranking2Adapter extends RecyclerView.Adapter<Ranking2Adapter.ViewHo
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView p;
+        private TextView xin;
         private TextView name;
         private TextView duration;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            p=itemView.findViewById(R.id.position);
+            xin=itemView.findViewById(R.id.xin);
             name=itemView.findViewById(R.id.name);
             duration=itemView.findViewById(R.id.duration);
+        }
+
+        public void setPosition(TextView position) {
+            this.p = position;
         }
 
         public TextView getName() {

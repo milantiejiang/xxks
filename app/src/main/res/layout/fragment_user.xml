@@ -114,6 +114,7 @@
                         android:textColor="@color/black"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="16dp"
                     android:layout_alignParentRight="true"
