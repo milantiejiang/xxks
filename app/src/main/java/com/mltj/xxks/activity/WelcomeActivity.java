@@ -1,9 +1,11 @@
 package com.mltj.xxks.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -27,6 +29,8 @@ public class WelcomeActivity extends BasiceActivity {
     TextView tv1;
     @BindView(R.id.tv2)
     TextView tv2;
+    @BindView(R.id.tv3)
+    TextView tv3;
 
     private CountDownTimer mTimer;
 
@@ -38,7 +42,11 @@ public class WelcomeActivity extends BasiceActivity {
     @Override
     protected void init() {
         super.init();
-        Glide.with(WelcomeActivity.this).load(R.drawable.wc).
+        Typeface typeface = ResourcesCompat.getFont(this, R.font.gy);
+        tv1.setTypeface(typeface);
+        tv2.setTypeface(typeface);
+        tv3.setTypeface(typeface);
+        Glide.with(WelcomeActivity.this).load(R.drawable.sd).
                 diskCacheStrategy(DiskCacheStrategy.SOURCE).
                 into(new SimpleTarget<GlideDrawable>() {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -53,6 +61,7 @@ public class WelcomeActivity extends BasiceActivity {
                         Animation animation = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.alpha);
                         tv1.setAnimation(animation);
                         tv2.setAnimation(animation);
+                        tv3.setAnimation(animation);
                         startCounter();
                     }
                 });

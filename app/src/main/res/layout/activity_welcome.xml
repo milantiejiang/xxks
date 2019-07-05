@@ -8,7 +8,8 @@
     tools:context=".activity.WelcomeActivity">
     <ImageView
         android:id="@+id/image"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <LinearLayout
@@ -18,11 +19,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv3"
+            android:ems="1"
+            android:text="韩愈"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="220dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
             android:id="@+id/tv1"
             android:layout_marginRight="10dp"
             android:layout_marginTop="35dp"
             android:ems="1"
-            android:text="林以载道"
+            android:text="业精于勤，荒于嬉"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="@color/black"
@@ -31,7 +43,7 @@
         <TextView
             android:id="@+id/tv2"
             android:ems="1"
-            android:text="成人达己"
+            android:text="行成于思,毁于随"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="@color/black"
