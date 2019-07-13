@@ -14,6 +14,15 @@ public class Study implements Serializable {
     private String createDate;
     private long longCreateDate;
     private ArrayList<FileJoin> fileJoins;
+    private ArrayList<FileJoin> vedioFileJoins;
+
+    public ArrayList<FileJoin> getVedioFileJoins() {
+        return vedioFileJoins;
+    }
+
+    public void setVedioFileJoins(ArrayList<FileJoin> vedioFileJoins) {
+        this.vedioFileJoins = vedioFileJoins;
+    }
 
     public int getId() {
         return id;

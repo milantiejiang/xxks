@@ -48,6 +48,8 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
     TextView kszt;
     @BindView(R.id.score)
     TextView score;
+    @BindView(R.id.today_jf)
+    TextView todayJf;
 
 //    @BindView(R.id.ydxx_score_ts)
 //    TextView ydxxts;
@@ -163,6 +165,7 @@ public class IntegralRuleActivity extends BasiceActivity implements View.OnClick
 
                             for (int i = 0; i < rp.size(); i++) {
                                 Rule2 rule = rp.get(i);
+                                todayJf.setText(rule.getCreditValue3());
                                 switch (rule.getCreditType()) {
                                     case 38:
                                         //登录

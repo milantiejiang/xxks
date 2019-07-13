@@ -45,14 +45,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         final Study study=data.get(position);
         viewHolder.title.setText(study.getTitle());
         viewHolder.date.setText(Util.getDateStr(study.getLongCreateDate()));
-        ArrayList<FileJoin> flist=study.getFileJoins();
+        ArrayList<FileJoin> flist=study.getVedioFileJoins();
         if(flist!=null){
             for(int i=0;i<flist.size();i++){
                 String url=flist.get(i).getFileUrl();
                 Glide.with(context).load(url).placeholder(Util.getRandomColor()).into(viewHolder.icon);
             }
         }else {
-            viewHolder.icon.setBackgroundColor(Util.getRandomColor());
+            viewHolder.icon.setVisibility(View.GONE);
         }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

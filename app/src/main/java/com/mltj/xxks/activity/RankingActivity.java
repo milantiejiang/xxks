@@ -1,5 +1,6 @@
 package com.mltj.xxks.activity;
 
+import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -10,11 +11,15 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.google.gson.Gson;
 import com.mltj.xxks.R;
 import com.mltj.xxks.bean.DateCategory;
 import com.mltj.xxks.bean.MessageEvent;
+import com.mltj.xxks.bean.Ranking2Response;
 import com.mltj.xxks.fragment.main.CompanyRankingFragment;
 import com.mltj.xxks.fragment.main.DepmentRankingFragment;
+import com.mltj.xxks.net.ApiService;
+import com.mltj.xxks.net.RetrofitUtil;
 import com.mltj.xxks.util.Contents;
 import com.mltj.xxks.util.SpUtils;
 import com.mltj.xxks.util.UserSPUtil;
@@ -25,6 +30,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RankingActivity extends BasiceActivity implements View.OnClickListener {
     @BindView(R.id.selcet)
@@ -33,6 +41,10 @@ public class RankingActivity extends BasiceActivity implements View.OnClickListe
     TabLayout tablayout;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    @BindView(R.id.company_pm)
+    TextView companypm;
+    @BindView(R.id.dep_pm)
+    TextView deppm;
 
     int mdep = 0;
     int mcompany = 0;
@@ -114,7 +126,7 @@ public class RankingActivity extends BasiceActivity implements View.OnClickListe
             }
         });
         tablayout.setupWithViewPager(viewPager);
-
+        getData(1);
     }
 
     private void showSelcet() {
@@ -159,5 +171,41 @@ public class RankingActivity extends BasiceActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    private void getData(int index) {
+        ApiService apiService = RetrofitUtil.getRetrofitInstance(this).create(ApiService.class);
+        Call<String> call1 = apiService.getPointsLeaderboard(mcompany,
+                mdep,
+                3,
+                index, 10, "", UserSPUtil.getInstance(this).getInt(Contents.KEY_USER_ID));
+        call1.enqueue(new Callback<String>() {
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String json = response.body();
+                Gson gson = new Gson();
+                try {
+                    Ranking2Response object = gson.fromJson(json, Ranking2Response.class);
+                    if (object != null) {
+                        Ranking2Response.Response rp = object.getData();
+                        if (rp != null) {
+                            companypm.setText(rp.getCompanyRanking()+"");
+                            deppm.setText(rp.getDepartmentRanking()+"");
+                        }
+
+                    }
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
     }
 }

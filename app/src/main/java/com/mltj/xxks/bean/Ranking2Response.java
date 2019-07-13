@@ -20,8 +20,25 @@ public class Ranking2Response extends BasicResponse implements Serializable {
         private int pageSize;
         private ArrayList<Ranking2> results;
         private int total;
+        private int companyRanking;
+        private int departmentRanking;
 
 
+        public int getCompanyRanking() {
+            return companyRanking;
+        }
+
+        public void setCompanyRanking(int companyRanking) {
+            this.companyRanking = companyRanking;
+        }
+
+        public int getDepartmentRanking() {
+            return departmentRanking;
+        }
+
+        public void setDepartmentRanking(int departmentRanking) {
+            this.departmentRanking = departmentRanking;
+        }
 
         public int getPageIndex() {
             return pageIndex;
